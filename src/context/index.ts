@@ -21,12 +21,14 @@ export const ctx = new Elysia({
   .use(html())
   .decorate("db", db)
   .decorate("config", env)
-  .onStart(({ log }) => log.info("Server starting"))
-  .onStop(({ log }) => log.info("Server stopping"))
+  // .onStart(({ log }) => log.info("Server starting"))
+  // .onStop(({ log }) => log.info("Server stopping"))
   .onRequest(({ log, request }) =>
     log.debug(`Request received: ${request.method}: ${request.url}`)
   )
-  .onResponse(({ log, response }) =>
-    log.debug(`Response sent: ${response.statusCode}`)
-  )
-  .onError(({ log, error }) => log.error(error));
+  .onResponse(({ log, request, set }) =>
+    log.debug(
+      `Response sent: ${request.method}: ${request.url} with status ${set.status}`
+    )
+  );
+// .onError(({ log, error }) => log.error(error));
