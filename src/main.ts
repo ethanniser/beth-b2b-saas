@@ -12,3 +12,8 @@ const app = new Elysia({
   .listen(3000);
 
 console.log(`app is listening on ${app.server?.hostname}:${app.server?.port}`);
+
+app
+  .handle(new Request("http://localhost:3000/todos"))
+  .then((res) => res.text())
+  .then(console.log);

@@ -1,4 +1,5 @@
 import type { Todo } from "../model/todo";
+import Html from "@kitajs/html";
 
 export const TodoItem = (todo: Todo) => {
   return (

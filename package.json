@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@bogeychan/elysia-logger": "0.0.9",
-    "@elysiajs/html": "^0.6.5",
     "@elysiajs/static": "^0.6.0",
     "@elysiajs/swagger": "^0.6.2",
+    "@kitajs/html": "^2.1.2",
     "@t3-oss/env-core": "^0.6.1",
     "drizzle-orm": "^0.28.6",
     "drizzle-typebox": "^0.1.1",
