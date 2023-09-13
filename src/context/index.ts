@@ -2,7 +2,7 @@ import { Elysia } from "elysia";
 import { logger } from "@bogeychan/elysia-logger";
 import pretty from "pino-pretty";
 import { html } from "@elysiajs/html";
-import { env } from "../config";
+import { config } from "../config";
 import { db } from "../model/store";
 
 const stream = pretty({
@@ -14,13 +14,13 @@ export const ctx = new Elysia({
 })
   .use(
     logger({
-      level: env.LOG_LEVEL,
+      level: config.env.LOG_LEVEL,
       stream,
     })
   )
   .use(html())
   .decorate("db", db)
-  .decorate("config", env)
+  .decorate("config", config)
   // .onStart(({ log }) => log.info("Server starting"))
   // .onStop(({ log }) => log.info("Server stopping"))
   .onRequest(({ log, request }) =>

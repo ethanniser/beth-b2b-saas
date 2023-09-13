@@ -6,7 +6,7 @@ import { todosController } from "./controllers/todos";
 const app = new Elysia({
   name: "@app/main",
 })
-  .use(swagger())
+  // .use(swagger())
   .use(staticPlugin())
   .use(todosController)
   .listen(3000);

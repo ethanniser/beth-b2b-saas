@@ -2,6 +2,10 @@
   "name": "test",
   "module": "src/main.ts",
   "type": "module",
+  "scripts": {
+    "dev": "bun run --hot src/main.ts",
+    "start": "bun run src/main.ts"
+  },
   "devDependencies": {
     "bun-types": "latest",
     "drizzle-kit": "^0.19.13"
@@ -10,7 +14,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@bogeychan/elysia-logger": "^0.0.8",
+    "@bogeychan/elysia-logger": "0.0.9",
     "@elysiajs/html": "^0.6.5",
     "@elysiajs/static": "^0.6.0",
     "@elysiajs/swagger": "^0.6.2",
@@ -19,6 +23,7 @@
     "drizzle-typebox": "^0.1.1",
     "elysia": "^0.6.22",
     "pino-pretty": "^10.2.0",
-    "zod": "^3.22.2"
+    "zod": "^3.22.2",
+    "zodcli": "^0.0.4"
   }
 }
