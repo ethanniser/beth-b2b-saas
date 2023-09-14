@@ -3,7 +3,7 @@ import { createClient } from "@libsql/client";
 import * as schema from "./schemas";
 import { config } from "../config";
 
-const client = createClient({
+export const client = createClient({
   url: config.env.DATABASE_URL,
   authToken: config.env.DATABASE_AUTH_TOKEN,
 });

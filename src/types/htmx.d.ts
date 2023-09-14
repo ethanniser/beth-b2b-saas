@@ -27,7 +27,7 @@ type RouterPattern<T extends string> =
     : T;
 
 declare namespace JSX {
-  type Schema = import("./main").App["meta"]["schema"];
+  type Schema = import("../main").App["meta"]["schema"];
 
   type PostRoutes = RoutesByType<Schema, "post">;
   type GetRoutes = RoutesByType<Schema, "get">;

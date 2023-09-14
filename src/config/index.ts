@@ -6,13 +6,14 @@ const env = createEnv({
     LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]),
     DATABASE_URL: z.string().min(1),
     DATABASE_AUTH_TOKEN: z.string().min(1),
+    NODE_ENV: z.enum(["development", "production"]),
   },
   runtimeEnv: process.env,
 });
 
 const args = {
   // watch: process.argv.includes("--watch"),
-  liveReload: true
+  // liveReload: true,
 };
 
 export const config = {

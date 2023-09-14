@@ -17,34 +17,6 @@ export const BaseHtml = ({ children }: Html.PropsWithChildren) => (
       <script>
         {`
         (function () {
-            var consoleOutput = document.getElementById('consoleOutput');
-
-            if (!window.console) {
-                window.console = {};
-            }
-
-            var oldConsoleLog = console.log;
-
-            console.log = function (message) {
-                // Append the log message to the consoleOutput div
-                if (consoleOutput) {
-                    var logMessage = document.createElement('p');
-                    logMessage.textContent = message;
-                    consoleOutput.appendChild(logMessage);
-                }
-
-                // Call the original console.log function
-                oldConsoleLog.apply(console, arguments);
-            };
-
-            // You can do the same for other console methods like error, warn, etc. if needed
-
-        })()
-        `}
-      </script>
-      <script>
-        {`
-        (function () {
           let socket = new WebSocket("ws://localhost:3001/ws");
 
           socket.onopen = function(e) {
@@ -67,13 +39,6 @@ export const BaseHtml = ({ children }: Html.PropsWithChildren) => (
         `}
       </script>
     </head>
-    <body>
-      <div
-        id="consoleOutput"
-        style="background-color: #f0f0f0; padding: 10px;"
-      ></div>
-      <script>console.log("Hello from the client side!");</script>
-      {children}
-    </body>
+    <body>{children}</body>
   </html>
 );
