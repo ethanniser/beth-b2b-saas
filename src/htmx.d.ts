@@ -1,15 +1,30 @@
 type RoutesByType<
   Schema extends Record<string, unknown>,
   Type extends "get" | "post" | "put" | "delete" | "patch"
-> = RemoveSlash<
-  keyof {
-    [key in keyof Schema as Schema[key] extends { [key in Type]: unknown }
-      ? key
-      : never]: true;
-  }
+> = RouterPattern<
+  RemoveSlash<
+    keyof {
+      [key in keyof Schema as Schema[key] extends { [key in Type]: unknown }
+        ? key
+        : never]: true;
+    }
+  >
 >;
 
-type RemoveSlash<S extends string> = S extends `${infer T}/` ? T : S;
+type RemoveSlash<S extends string> = S extends `${infer T}/`
+  ? T extends ""
+    ? S
+    : T
+  : S;
+
+type RouterPattern<T extends string> =
+  T extends `${infer Start}:${infer Param}/${infer Rest}`
+    ? `${Start}${string}/${RouterPattern<Rest>}`
+    : T extends `${infer Start}:${infer Param}`
+    ? `${Start}${string}`
+    : T extends `${infer Start}*`
+    ? `${Start}${string}`
+    : T;
 
 declare namespace JSX {
   type Schema = import("./main").App["meta"]["schema"];

@@ -19,7 +19,14 @@ export const ctx = new Elysia({
     })
   )
   .decorate("db", db)
-  .decorate("config", config);
+  .decorate("config", config)
+  .decorate(
+    "html",
+    (html: string) =>
+      new Response(html, {
+        headers: { "Content-Type": "text/html; charset=utf8" },
+      })
+  );
 // .onStart(({ log }) => log.info("Server starting"))
 // .onStop(({ log }) => log.info("Server stopping"))
 // .onRequest(({ log, request }) => {
