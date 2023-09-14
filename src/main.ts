@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { staticPlugin } from "@elysiajs/static";
-import { todosService } from "./services/todos";
+import { todosService } from "./handlers/todos";
 import { pages } from "./pages";
 
 const app = new Elysia({
