@@ -1,10 +1,10 @@
 import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-typebox";
 
-export const todos = sqliteTable("todo", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const todos = sqliteTable("todos", {
+  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   content: text("content").notNull(),
-  done: integer("done", { mode: "boolean" }).notNull().default(false),
+  completed: integer("completed", { mode: "boolean" }).notNull().default(false),
 });
 
 export type Todo = typeof todos.$inferSelect;

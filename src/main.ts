@@ -1,5 +1,5 @@
 import { Elysia } from "elysia";
-import swagger from "@elysiajs/swagger";
+import { swagger } from "@elysiajs/swagger";
 import { staticPlugin } from "@elysiajs/static";
 import { todosController } from "./controllers/todos";
 
@@ -10,6 +10,8 @@ const app = new Elysia({
   .use(staticPlugin())
   .use(todosController)
   .listen(3000);
+
+export type App = typeof app;
 
 console.log(`app is listening on ${app.server?.hostname}:${app.server?.port}`);
 

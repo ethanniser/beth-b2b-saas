@@ -4,7 +4,10 @@
   "type": "module",
   "scripts": {
     "dev": "bun run --hot src/main.ts",
-    "start": "bun run src/main.ts"
+    "start": "bun run src/main.ts",
+    "db:push": "bunx drizzle-kit push:sqlite",
+    "db:studio": "bunx drizzle-kit studio",
+    "db:seed": "bun run src/model/store/seed.ts"
   },
   "devDependencies": {
     "bun-types": "latest",
@@ -18,6 +21,7 @@
     "@elysiajs/static": "^0.6.0",
     "@elysiajs/swagger": "^0.6.2",
     "@kitajs/html": "^2.1.2",
+    "@libsql/client": "^0.3.4",
     "@t3-oss/env-core": "^0.6.1",
     "drizzle-orm": "^0.28.6",
     "drizzle-typebox": "^0.1.1",

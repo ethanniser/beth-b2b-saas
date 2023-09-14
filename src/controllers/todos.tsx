@@ -3,7 +3,7 @@ import { ctx } from "../context";
 import { insertTodoSchema } from "../model/todo";
 import { TodoItem } from "../views/todoItem";
 import Html from "@kitajs/html";
-import { db } from "../model/store";
+import { db as works } from "../model/store";
 
 export const todosController = new Elysia({
   name: "@app/todos",
@@ -13,12 +13,13 @@ export const todosController = new Elysia({
   .model({
     todo: insertTodoSchema,
   })
-  .get("/", async ({ log }) => {
+  .get("/", async ({ log, db }) => {
+    console.log("db", db === works);
     log.info("get todos");
-    const todos = await db.query.todos.findMany();
+    const todos = await works.query.todos.findMany();
 
     return (
-      <div>
+      <div hx-get="/todos">
         {todos.map((todo) => (
           <TodoItem {...todo} />
         ))}
