@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { staticPlugin } from "@elysiajs/static";
-import { api } from "./handlers";
+import { api } from "./controllers";
 import { autoroutes } from "elysia-autoroutes";
 
 const app = new Elysia({
