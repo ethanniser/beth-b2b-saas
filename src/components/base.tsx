@@ -1,4 +1,3 @@
-import Html from "@kitajs/html";
 import { config } from "../config";
 
 export const BaseHtml = ({ children }: Html.PropsWithChildren) => (

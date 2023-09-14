@@ -1,8 +1,8 @@
-import { GetHandler } from "../context";
-import Html from "@kitajs/html";
+import Elysia from "elysia";
 import { BaseHtml } from "../components/base";
+import { ctx } from "../context";
 
-export const get: GetHandler = ({ html }) =>
+export const index = new Elysia().use(ctx).get("/", ({ html }) =>
   html(
     <BaseHtml>
       <div
@@ -12,4 +12,5 @@ export const get: GetHandler = ({ html }) =>
         hx-trigger="load"
       />
     </BaseHtml>
-  );
+  )
+);

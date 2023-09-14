@@ -2,18 +2,14 @@ import { Elysia, t } from "elysia";
 import { ctx } from "../context";
 import { insertTodoSchema, todos } from "../db/schemas/todos";
 import { TodoItem, TodoForm, TodoList } from "../components/todos";
-import Html from "@kitajs/html";
+
 import { db } from "../db";
 import { eq } from "drizzle-orm";
 
-export const todosService = new Elysia({
-  name: "@app/todos",
+export const todosController = new Elysia({
   prefix: "/todos",
 })
   .use(ctx)
-  .model({
-    todo: insertTodoSchema,
-  })
   .get("/", async () => {
     const data = await db.select().from(todos).limit(10);
     return <TodoList todos={data} />;

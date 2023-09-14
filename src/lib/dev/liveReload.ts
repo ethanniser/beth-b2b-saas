@@ -1,7 +1,7 @@
-import { Elysia, ws } from "elysia";
+import { Elysia } from "elysia";
 import { type ElysiaWS } from "elysia/ws";
 
-let wsConnections = new Set<ElysiaWS<any>>();
+let wsConnections = new Set<ElysiaWS<any, any>>();
 
 function dispatch() {
   wsConnections.forEach((connection) => {
@@ -11,7 +11,6 @@ function dispatch() {
 }
 
 const app = new Elysia()
-  .use(ws())
   .ws("/ws", {
     open(ws) {
       console.log("open");
