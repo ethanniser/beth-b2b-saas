@@ -1,15 +1,14 @@
 import { Elysia, ws } from "elysia";
 import { type ElysiaWS } from "elysia/ws";
-import { watch } from "chokidar";
 
 let wsConnections = new Set<ElysiaWS<any>>();
 
-watch("src/**/*.{ts,tsx}").on("all", (event, path) => {
-  console.log("sending event");
+function dispatch() {
   wsConnections.forEach((connection) => {
+    console.log("sending refresh");
     connection.send("refresh");
   });
-});
+}
 
 const app = new Elysia()
   .use(ws())
@@ -25,6 +24,10 @@ const app = new Elysia()
     message(ws, message) {
       console.log("message", message);
     },
+  })
+  .get("/restart", () => {
+    console.log("recieved restart");
+    dispatch();
   })
   .listen(3001);
 

@@ -3,6 +3,7 @@ import { swagger } from "@elysiajs/swagger";
 import { staticPlugin } from "@elysiajs/static";
 import { api } from "./controllers";
 import { autoroutes } from "elysia-autoroutes";
+import { config } from "./config";
 
 const app = new Elysia({
   name: "@app/main",
@@ -16,6 +17,12 @@ const app = new Elysia({
       routesDir: "./pages",
     })
   )
+  .onStart(() => {
+    if (config.env.NODE_ENV === "development") {
+      void fetch("http://localhost:3001/restart");
+      console.log("🦊 Triggering Live Reload");
+    }
+  })
   .listen(3000);
 
 export type App = typeof app;

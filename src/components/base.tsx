@@ -24,7 +24,6 @@ export const BaseHtml = ({ children }: Html.PropsWithChildren) => (
           };
 
           socket.onmessage = function(event) {
-            console.log(event.data);
             location.reload();
           };
 
