@@ -2,8 +2,7 @@ import { Elysia } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { staticPlugin } from "@elysiajs/static";
 import { todosService } from "./services/todos";
-import { BaseHtml } from "./components/base";
-import Html from "@kitajs/html";
+import { pages } from "./pages";
 
 const app = new Elysia({
   name: "@app/main",
@@ -12,18 +11,7 @@ const app = new Elysia({
   .use(swagger())
   .use(staticPlugin())
   .use(todosService)
-  .get("/", ({ html }) =>
-    html(
-      <BaseHtml>
-        <body
-          class="flex w-full h-screen justify-center items-center"
-          hx-get="/todos"
-          hx-swap="innerHTML"
-          hx-trigger="load"
-        />
-      </BaseHtml>
-    )
-  )
+  .use(pages)
   .listen(3000);
 
 export type App = typeof app;

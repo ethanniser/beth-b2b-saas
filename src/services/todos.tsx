@@ -1,4 +1,4 @@
-import Elysia, { t } from "elysia";
+import { Elysia, t } from "elysia";
 import { ctx } from "../context";
 import { insertTodoSchema, todos } from "../db/schemas/todos";
 import { TodoItem, TodoForm, TodoList } from "../components/todos";

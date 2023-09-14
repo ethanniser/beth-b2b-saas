@@ -3,8 +3,8 @@
   "module": "src/main.ts",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"bun run --hot src/main.tsx\" \"bun run uno:dev\"",
-    "start": "bun run uno && bun run src/main.tsx",
+    "dev": "concurrently \"bun run --hot src/main.ts\" \"bun run uno:dev\"",
+    "start": "bun run uno && bun run src/main.ts",
     "db:push": "bunx drizzle-kit push:sqlite",
     "db:studio": "bunx drizzle-kit studio",
     "db:seed": "bun run src/model/store/seed.ts",
