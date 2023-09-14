@@ -6,7 +6,7 @@ import Html from "@kitajs/html";
 import { db } from "../db";
 import { eq } from "drizzle-orm";
 
-export const todosController = new Elysia({
+export const todosService = new Elysia({
   name: "@app/todos",
   prefix: "/todos",
 })

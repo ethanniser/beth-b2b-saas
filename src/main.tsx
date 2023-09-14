@@ -1,16 +1,17 @@
 import { Elysia } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { staticPlugin } from "@elysiajs/static";
-import { todosController } from "./services/todos";
+import { todosService } from "./services/todos";
 import { BaseHtml } from "./components/base";
 import Html from "@kitajs/html";
 
 const app = new Elysia({
   name: "@app/main",
 })
-  // .use(swagger())
+  // @ts-expect-error idk why this is broken
+  .use(swagger())
   .use(staticPlugin())
-  .use(todosController)
+  .use(todosService)
   .get("/", ({ html }) =>
     html(
       <BaseHtml>
