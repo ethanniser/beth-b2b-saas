@@ -1,4 +1,4 @@
-import type { Todo } from "../model/todo";
+import type { Todo } from "../db/todo";
 import Html from "@kitajs/html";
 
 export function TodoItem({ content, completed, id }: Todo) {

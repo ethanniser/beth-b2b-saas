@@ -1,15 +1,15 @@
 import { Elysia } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { staticPlugin } from "@elysiajs/static";
-import { todosController } from "./controllers/todos";
-import { BaseHtml } from "./views/base";
+import { todosController } from "./services/todos";
+import { BaseHtml } from "./components/base";
 import Html from "@kitajs/html";
 
 const app = new Elysia({
   name: "@app/main",
 })
   // .use(swagger())
-  // .use(staticPlugin())
+  .use(staticPlugin())
   .use(todosController)
   .get("/", ({ html }) =>
     html(

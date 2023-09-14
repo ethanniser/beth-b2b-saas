@@ -3,15 +3,19 @@
   "module": "src/main.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun run --hot src/main.tsx",
-    "start": "bun run src/main.tsx",
+    "dev": "concurrently \"bun run --hot src/main.tsx\" \"bun run uno:dev\"",
+    "start": "bun run uno && bun run src/main.tsx",
     "db:push": "bunx drizzle-kit push:sqlite",
     "db:studio": "bunx drizzle-kit studio",
-    "db:seed": "bun run src/model/store/seed.ts"
+    "db:seed": "bun run src/model/store/seed.ts",
+    "uno": "bunx unocss",
+    "uno:dev": "bunx unocss --watch"
   },
   "devDependencies": {
     "bun-types": "latest",
-    "drizzle-kit": "^0.19.13"
+    "concurrently": "^8.2.1",
+    "drizzle-kit": "^0.19.13",
+    "unocss": "^0.55.7"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

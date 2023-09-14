@@ -2,7 +2,7 @@ import { Elysia } from "elysia";
 import { logger } from "@bogeychan/elysia-logger";
 import pretty from "pino-pretty";
 import { config } from "../config";
-import { db } from "../model/store";
+import { db } from "../db";
 import "@kitajs/html/htmx";
 
 const stream = pretty({

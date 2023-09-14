@@ -1,9 +1,9 @@
 import Elysia, { t } from "elysia";
 import { ctx } from "../context";
-import { insertTodoSchema, todos } from "../model/todo";
-import { TodoItem, TodoForm, TodoList } from "../views/todos";
+import { insertTodoSchema, todos } from "../db/schemas/todos";
+import { TodoItem, TodoForm, TodoList } from "../components/todos";
 import Html from "@kitajs/html";
-import { db } from "../model/store";
+import { db } from "../db";
 import { eq } from "drizzle-orm";
 
 export const todosController = new Elysia({
