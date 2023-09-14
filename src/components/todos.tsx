@@ -8,13 +8,13 @@ export function TodoItem({ content, completed, id }: Todo) {
       <input
         type="checkbox"
         checked={completed}
-        hx-post={`/todos/toggle/${id}`}
+        hx-post={`/api/todos/toggle/${id}`}
         hx-swap="outerHTML"
         hx-target="closest div"
       />
       <button
         class="text-red-500"
-        hx-delete={`/todos/${id}`}
+        hx-delete={`/api/todos/${id}`}
         hx-swap="outerHTML"
         hx-target="closest div"
       >
@@ -39,7 +39,7 @@ export function TodoForm() {
   return (
     <form
       class="flex flex-row space-x-3"
-      hx-post="/todos"
+      hx-post="/api/todos"
       hx-swap="beforebegin"
       _="on submit target.reset()"
     >

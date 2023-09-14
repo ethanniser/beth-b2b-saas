@@ -1,8 +1,8 @@
 import { Elysia } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { staticPlugin } from "@elysiajs/static";
-import { todosService } from "./handlers/todos";
-import { pages } from "./pages";
+import { api } from "./handlers";
+import { autoroutes } from "elysia-autoroutes";
 
 const app = new Elysia({
   name: "@app/main",
@@ -10,8 +10,12 @@ const app = new Elysia({
   // @ts-expect-error idk why this is broken
   .use(swagger())
   .use(staticPlugin())
-  .use(todosService)
-  .use(pages)
+  .use(api)
+  .use(
+    autoroutes({
+      routesDir: "./pages",
+    })
+  )
   .listen(3000);
 
 export type App = typeof app;

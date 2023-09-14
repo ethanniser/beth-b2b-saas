@@ -38,3 +38,9 @@ export const ctx = new Elysia({
 //   );
 // });
 // .onError(({ log, error }) => log.error(error));
+
+export type ElysiaApp = typeof ctx;
+export type GetHandler = Parameters<typeof ctx.get>[1];
+export type PostHandler = Parameters<typeof ctx.post>[1];
+export type PutHandler = Parameters<typeof ctx.put>[1];
+export type DelHandler = Parameters<typeof ctx.delete>[1];

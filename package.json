@@ -33,6 +33,7 @@
     "drizzle-orm": "^0.28.6",
     "drizzle-typebox": "^0.1.1",
     "elysia": "^0.6.22",
+    "elysia-autoroutes": "^0.2.2",
     "lucia": "^2.6.0",
     "pino-pretty": "^10.2.0",
     "zod": "^3.22.2"
