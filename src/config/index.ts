@@ -1,6 +1,5 @@
 import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod";
-import { argumentParser } from "zodcli";
 
 const env = createEnv({
   server: {
@@ -11,11 +10,12 @@ const env = createEnv({
   runtimeEnv: process.env,
 });
 
-// const args = argumentParser({
-//   options: z.object({}),
-// }).parse(process.argv.slice(2));
+const args = {
+  // watch: process.argv.includes("--watch"),
+  liveReload: true
+};
 
 export const config = {
   env,
-  // args,
+  args,
 };
