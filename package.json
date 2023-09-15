@@ -28,6 +28,7 @@
     "@elysiajs/static": "^0.6.0",
     "@elysiajs/swagger": "^0.6.2",
     "@kitajs/html": "^2.1.2",
+    "@kitajs/ts-html-plugin": "^1.0.1",
     "@libsql/client": "0.3.5-pre.4",
     "@lucia-auth/adapter-sqlite": "^2.0.0",
     "@t3-oss/env-core": "^0.6.1",
