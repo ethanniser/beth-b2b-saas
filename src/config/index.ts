@@ -7,6 +7,7 @@ const env = createEnv({
     DATABASE_URL: z.string().min(1),
     DATABASE_AUTH_TOKEN: z.string().min(1),
     NODE_ENV: z.enum(["development", "production"]),
+    COOKIE_SECRET: z.string().min(1),
   },
   runtimeEnv: process.env,
 });

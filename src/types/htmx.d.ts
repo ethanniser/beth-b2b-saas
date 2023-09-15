@@ -1,13 +1,15 @@
 type RoutesByType<
-  Schema extends Record<string, unknown>,
+  Schema extends Record<string, any>, // Ensure keys are strings
   Type extends "get" | "post" | "put" | "delete" | "patch"
 > = RouterPattern<
   RemoveSlash<
-    keyof {
-      [key in keyof Schema as Schema[key] extends { [key in Type]: unknown }
-        ? key
-        : never]: true;
-    }
+    string &
+      keyof {
+        // Constrain to strings here
+        [key in keyof Schema as Schema[key] extends { [key in Type]: unknown }
+          ? key
+          : never]: true;
+      }
   >
 >;
 
@@ -26,15 +28,15 @@ type RouterPattern<T extends string> =
     ? `${Start}${string}`
     : T;
 
+type Schema = import("../main").App["schema"];
+
+type PostRoutes = RoutesByType<Schema, "post">;
+type GetRoutes = RoutesByType<Schema, "get">;
+type PutRoutes = RoutesByType<Schema, "put">;
+type DeleteRoutes = RoutesByType<Schema, "delete">;
+type PatchRoutes = RoutesByType<Schema, "patch">;
+
 declare namespace JSX {
-  type Schema = import("../main").App["meta"]["schema"];
-
-  type PostRoutes = RoutesByType<Schema, "post">;
-  type GetRoutes = RoutesByType<Schema, "get">;
-  type PutRoutes = RoutesByType<Schema, "put">;
-  type DeleteRoutes = RoutesByType<Schema, "delete">;
-  type PatchRoutes = RoutesByType<Schema, "patch">;
-
   interface HtmlTag extends Htmx.Attributes {
     ["hx-get"]?: GetRoutes;
     ["hx-post"]?: PostRoutes;

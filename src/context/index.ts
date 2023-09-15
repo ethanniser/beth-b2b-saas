@@ -5,6 +5,7 @@ import { config } from "../config";
 import { db } from "../db";
 import "@kitajs/html/register";
 import "@kitajs/html/htmx";
+import { auth } from "../auth";
 
 // const stream = pretty({
 //   colorize: true,
@@ -12,6 +13,10 @@ import "@kitajs/html/htmx";
 
 export const ctx = new Elysia({
   name: "@app/ctx",
+  cookie: {
+    secrets: config.env.COOKIE_SECRET,
+    sign: "session",
+  },
 })
   // .use(
   //   logger({
@@ -21,6 +26,7 @@ export const ctx = new Elysia({
   // )
   .decorate("db", db)
   .decorate("config", config)
+  .decorate("auth", auth)
   .decorate(
     "html",
     (html: string) =>
