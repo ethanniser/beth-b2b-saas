@@ -10,7 +10,8 @@
     "db:studio": "bunx drizzle-kit studio",
     "db:seed": "bun run src/model/store/seed.ts",
     "uno": "bunx unocss",
-    "uno:dev": "bunx unocss --watch"
+    "uno:dev": "bunx unocss --watch",
+    "typecheck": "bunx --bun tsc"
   },
   "devDependencies": {
     "bun-types": "latest",

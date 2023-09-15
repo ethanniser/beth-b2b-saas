@@ -41,5 +41,6 @@ declare namespace JSX {
     ["hx-put"]?: PutRoutes;
     ["hx-delete"]?: DeleteRoutes;
     ["hx-patch"]?: PatchRoutes;
+    _?: string;
   }
 }
