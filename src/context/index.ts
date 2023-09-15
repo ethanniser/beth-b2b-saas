@@ -2,10 +2,11 @@ import { Elysia } from "elysia";
 // import { logger } from "@bogeychan/elysia-logger";
 // import pretty from "pino-pretty";
 import { config } from "../config";
-import { db } from "../db";
+import { client, db } from "../db";
 import "@kitajs/html/register";
 import "@kitajs/html/htmx";
 import { auth } from "../auth";
+// import { cron } from "@elysiajs/cron";
 
 // const stream = pretty({
 //   colorize: true,
@@ -22,6 +23,21 @@ export const ctx = new Elysia({
   //   logger({
   //     level: config.env.LOG_LEVEL,
   //     stream,
+  //   })
+  // )
+  // .use(
+  //   cron({
+  //     name: "heartbeat",
+  //     pattern: "*/1 * * * * *",
+  //     run() {
+  //       if (config.env.SYNC_URL) {
+  //         const now = performance.now();
+  //         console.log("Syncing database...");
+  //         void client.sync().then(() => {
+  //           console.log(`Database synced in ${performance.now() - now}ms`);
+  //         });
+  //       }
+  //     },
   //   })
   // )
   .decorate("db", db)

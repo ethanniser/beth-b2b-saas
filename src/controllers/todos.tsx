@@ -3,7 +3,7 @@ import { ctx } from "../context";
 import { insertTodoSchema, todos } from "../db/schema/todos";
 import { TodoItem, TodoForm, TodoList } from "../components/todos";
 
-import { db } from "../db";
+import { client, db } from "../db";
 import { eq } from "drizzle-orm";
 
 export const todosController = new Elysia({
@@ -11,7 +11,9 @@ export const todosController = new Elysia({
 })
   .use(ctx)
   .get("/", async () => {
+    const now = performance.now();
     const data = await db.select().from(todos).limit(10);
+    console.log("queried in", performance.now() - now);
     return <TodoList todos={data} />;
   })
   .post(
@@ -35,6 +37,10 @@ export const todosController = new Elysia({
       if (!newTodo) {
         throw new Error("Todo not found");
       }
+
+      client.sync();
+
+      console.log("returning");
 
       return <TodoItem {...newTodo} />;
     },
@@ -65,14 +71,25 @@ export const todosController = new Elysia({
         sub: "Subscribe to Ethan",
       };
 
+      const now = performance.now();
       const [newTodo] = await db
         .insert(todos)
         .values({ content: content[body.content] })
         .returning();
 
+      console.log("inserted in", performance.now() - now);
+
       if (!newTodo) {
         throw new Error("Todo not found");
       }
+      // const now2 = performance.now();
+      // client.sync().then(() => {
+      //   console.log("synced in", performance.now() - now2);
+      //   console.log("total time", performance.now() - now);
+      // });
+
+      console.log("returning");
+      console.log("total time", performance.now() - now);
 
       return <TodoItem {...newTodo} />;
     },
