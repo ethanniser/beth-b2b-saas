@@ -11,9 +11,7 @@ export const todosController = new Elysia({
 })
   .use(ctx)
   .get("/", async () => {
-    const now = performance.now();
     const data = await db.select().from(todos).limit(10);
-    console.log("queried in", performance.now() - now);
     return <TodoList todos={data} />;
   })
   .post(
@@ -71,13 +69,10 @@ export const todosController = new Elysia({
         sub: "Subscribe to Ethan",
       };
 
-      const now = performance.now();
       const [newTodo] = await db
         .insert(todos)
         .values({ content: content[body.content] })
         .returning();
-
-      console.log("inserted in", performance.now() - now);
 
       if (!newTodo) {
         throw new Error("Todo not found");
@@ -87,9 +82,6 @@ export const todosController = new Elysia({
       //   console.log("synced in", performance.now() - now2);
       //   console.log("total time", performance.now() - now);
       // });
-
-      console.log("returning");
-      console.log("total time", performance.now() - now);
 
       return <TodoItem {...newTodo} />;
     },

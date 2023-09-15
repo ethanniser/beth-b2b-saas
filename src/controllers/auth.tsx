@@ -41,8 +41,9 @@ export const authController = new Elysia({
 
       const sessionCookie = auth.createSessionCookie(session);
 
-      cookie.sesion?.set(sessionCookie);
+      // cookie.session?.set(sessionCookie);
 
+      set.headers["Set-Cookie"] = sessionCookie.serialize();
       set.headers["HX-Location"] = "/profile";
     },
     {
@@ -87,7 +88,8 @@ export const authController = new Elysia({
       });
       const sessionCookie = auth.createSessionCookie(session);
 
-      cookie.sesion?.set(sessionCookie);
+      // cookie.sesion?.set(sessionCookie);
+      set.headers["Set-Cookie"] = sessionCookie.serialize();
       set.headers["HX-Location"] = "/profile";
     },
     {
