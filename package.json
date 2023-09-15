@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"bun run --hot src/main.ts\" \"bun run uno:dev\" \"bun run liveReload\"",
-    "liveReload": "bun run src/lib/dev/liveReload.ts",
+    "liveReload": "bun run src/lib/liveReload.ts",
     "start": "bun run uno && bun run src/main.ts",
     "db:push": "bunx drizzle-kit push:sqlite",
     "db:studio": "bunx drizzle-kit studio",
