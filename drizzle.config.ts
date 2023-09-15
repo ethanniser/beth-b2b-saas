@@ -2,7 +2,7 @@ import type { Config } from "drizzle-kit";
 import { config } from "./src/config";
 
 export default {
-  schema: "./src/model/schema.ts",
+  schema: "./src/db/schema/index.ts",
   driver: "turso",
   dbCredentials: {
     url: config.env.DATABASE_URL,

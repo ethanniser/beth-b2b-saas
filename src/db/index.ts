@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
-import * as schema from "./schemas";
+import * as schema from "./schema";
 import { config } from "../config";
 
 export const client = createClient({

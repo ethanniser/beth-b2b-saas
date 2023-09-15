@@ -1,5 +1,5 @@
 import { db } from ".";
-import { todos } from "./schemas/todos";
+import { todos } from "./schema/todos";
 
 await db.batch([
   db.insert(todos).values({

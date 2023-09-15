@@ -1,4 +1,4 @@
-import type { Todo } from "../db/schemas/todos";
+import type { Todo } from "../db/schema/todos";
 
 export function TodoItem({ content, completed, id }: Todo) {
   return (
