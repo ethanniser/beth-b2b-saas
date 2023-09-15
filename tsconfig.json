@@ -20,6 +20,7 @@
     "allowJs": true,
     "types": [
       "bun-types" // add Bun global
-    ]
+    ],
+    "plugins": [{ "name": "@kitajs/html/tsp" }]
   }
 }
