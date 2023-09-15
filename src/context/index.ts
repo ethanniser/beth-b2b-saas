@@ -1,24 +1,24 @@
 import { Elysia } from "elysia";
-import { logger } from "@bogeychan/elysia-logger";
-import pretty from "pino-pretty";
+// import { logger } from "@bogeychan/elysia-logger";
+// import pretty from "pino-pretty";
 import { config } from "../config";
 import { db } from "../db";
 import "@kitajs/html/register";
 import "@kitajs/html/htmx";
 
-const stream = pretty({
-  colorize: true,
-});
+// const stream = pretty({
+//   colorize: true,
+// });
 
 export const ctx = new Elysia({
   name: "@app/ctx",
 })
-  .use(
-    logger({
-      level: config.env.LOG_LEVEL,
-      stream,
-    })
-  )
+  // .use(
+  //   logger({
+  //     level: config.env.LOG_LEVEL,
+  //     stream,
+  //   })
+  // )
   .decorate("db", db)
   .decorate("config", config)
   .decorate(
