@@ -36,6 +36,7 @@
     "elysia-autoroutes": "^0.2.2",
     "lucia": "^2.6.0",
     "pino-pretty": "^10.2.0",
-    "zod": "^3.22.2"
+    "zod": "^3.22.2",
+    "beth-jsx": "link:beth-jsx"
   }
 }
