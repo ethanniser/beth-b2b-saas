@@ -3,7 +3,7 @@ import type { Todo } from "../db/schema/todos";
 export function TodoItem({ content, completed, id }: Todo) {
   return (
     <div class="flex flex-row space-x-3">
-      <p>{content}</p>
+      <p safe>{content}</p>
       <input
         type="checkbox"
         checked={completed}
@@ -25,7 +25,7 @@ export function TodoItem({ content, completed, id }: Todo) {
 
 export function TodoList({ todos }: { todos: Todo[] }) {
   return (
-    <div>
+    <div safe>
       {todos.map((todo) => (
         <TodoItem {...todo} />
       ))}
