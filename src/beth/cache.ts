@@ -170,7 +170,7 @@ export function persistedCache<T extends () => Promise<any>>(
   key: string,
   options?: CacheOptions
 ): T {
-  const persist = options?.persist ?? "memory";
+  const persist = options?.persist ?? "json";
   const revalidate = options?.revalidate ?? Infinity;
   const tags = options?.tags ?? [];
 
