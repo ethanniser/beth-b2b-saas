@@ -19,7 +19,7 @@ class BethPersistCache {
   constructor() {
     this.callBackMap = new Map();
     this.inMemoryDataCache = new Map();
-    this.jsonDataCache = new Database("./.beth/beth-cache.sqlite");
+    this.jsonDataCache = new Database("beth-cache.sqlite");
     this.intervals = new Set();
     this.pendingMap = new Map();
     this.keys = new Set();
@@ -82,7 +82,7 @@ class BethPersistCache {
 
     promise.then((value) => {
       this.pendingMap.delete(key);
-      console.log(`Seeding ${cache} Cache:`, key, value);
+      console.log(`Seeding ${cache} Cache:`, key);
       if (cache === "memory") {
         this.inMemoryDataCache.set(key, value);
       } else if (cache === "json") {
