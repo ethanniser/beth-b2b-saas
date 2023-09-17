@@ -1,7 +1,7 @@
 import Elysia from "elysia";
 import { BaseHtml } from "../components/base";
 import { ctx } from "../context";
-import { renderToString } from "beth-jsx";
+import { Suspense, renderToStream, renderToString } from "beth-jsx";
 import { persistedCache, revalidateTag } from "beth-jsx";
 
 const start = Date.now();
@@ -48,4 +48,42 @@ export const index = new Elysia()
         <div id="foo"></div>
       </BaseHtml>
     ));
+  })
+  .get("/test2", async () => {
+    return renderToStream(() => <App2 />);
   });
+
+function wait(ms: number): Promise<number> {
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      resolve(ms);
+    }, ms)
+  );
+}
+
+export async function Wait({ ms }: { ms: number }) {
+  const data = await wait(ms);
+
+  return <div>loaded in: {data}ms</div>;
+}
+
+const App2 = () => (
+  <BaseHtml>
+    <div>
+      <p>I am sent immediately</p>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Wait ms={1000} />
+        <div>hello</div>
+      </Suspense>
+      <p>hey me too!</p>
+      <Suspense fallback={<div>loading 2...</div>}>
+        <Wait ms={2000} />
+        <div>hello two!</div>
+        <Suspense fallback={<div>loading 3...</div>}>
+          <Wait ms={3000} />
+          <div>hello three!</div>
+        </Suspense>
+      </Suspense>
+    </div>
+  </BaseHtml>
+);
