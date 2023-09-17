@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from "@kitajs/html";
+import { type PropsWithChildren } from "beth-jsx";
 import { config } from "../config";
 
 export const BaseHtml = ({ children }: PropsWithChildren) => (

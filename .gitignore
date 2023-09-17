@@ -172,3 +172,5 @@ tsconfig.tsbuildinfo
 local.sqlite
 local.sqlite-shm
 local.sqlite-wal
+
+.beth/

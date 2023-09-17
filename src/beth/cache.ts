@@ -14,28 +14,29 @@ class BethPersistCache {
   private inMemoryDataCache: Map<string, any>;
   private jsonDataCache: Database;
   private intervals: Set<NodeJS.Timeout>;
+  private keys: Set<string>;
 
   constructor() {
     this.callBackMap = new Map();
     this.inMemoryDataCache = new Map();
-    this.jsonDataCache = new Database("beth-cache.sqlite");
+    this.jsonDataCache = new Database("./.beth/beth-cache.sqlite");
     this.intervals = new Set();
     this.pendingMap = new Map();
+    this.keys = new Set();
 
-    this.jsonDataCache.exec(`
+    this.jsonDataCache.run(`
       DROP TABLE IF EXISTS cache;
     `);
 
-    this.jsonDataCache.exec(`
+    this.jsonDataCache.run(`
       CREATE TABLE cache (
         key TEXT PRIMARY KEY,
-        value TEXT NOT NULL,
+        value TEXT NOT NULL
       );
     `);
   }
 
   private setJsonCache(key: string, value: any) {
-    console.log("Seeding JSON Cache:", key, value);
     this.jsonDataCache.run(
       `
       INSERT INTO cache (key, value)
@@ -46,18 +47,17 @@ class BethPersistCache {
     );
   }
 
-  private async getJsonCache(key: string) {
+  private getJsonCache(key: string) {
     console.log("JSON Cache HIT:", key);
-    const result = (await this.jsonDataCache
+    const result = this.jsonDataCache
       .query("SELECT value FROM cache WHERE key = ?")
-      .get(key)) as { value: string } | undefined;
+      .get(key) as { value: string } | undefined;
     if (!result) throw new Error("JSON Cache Miss");
     return JSON.parse(result.value);
   }
 
   public seed({
     key,
-    value,
     tags,
     revalidate,
     callBack,
@@ -66,31 +66,51 @@ class BethPersistCache {
     cache: "memory" | "json";
     callBack: () => Promise<any>;
     key: string;
-    value: any;
     tags: string[];
     revalidate: number;
   }) {
-    console.log(`Seeding ${cache} Cache:`, key, value);
-    if (cache === "memory") {
-      this.inMemoryDataCache.set(key, value);
-    } else if (cache === "json") {
-      this.setJsonCache(key, value);
+    if (this.keys.has(key)) {
+      throw new Error(
+        `Persistant Cache Key already exists: ${key} - these much be unqiue across your entire app`
+      );
+    } else {
+      this.keys.add(key);
     }
-    this.callBackMap.set(key, {
-      callBack,
-      tags,
-      cache,
+
+    const promise = callBack();
+    this.pendingMap.set(key, promise);
+
+    promise.then((value) => {
+      this.pendingMap.delete(key);
+      console.log(`Seeding ${cache} Cache:`, key, value);
+      if (cache === "memory") {
+        this.inMemoryDataCache.set(key, value);
+      } else if (cache === "json") {
+        this.setJsonCache(key, value);
+      }
+      this.callBackMap.set(key, {
+        callBack,
+        tags,
+        cache,
+      });
+      if (revalidate > 0) {
+        this.setInterval(key, revalidate);
+      }
     });
-    if (revalidate > 0) {
-      console.log("Setting Revalidate Interval:", key, revalidate);
-      this.setInterval(key, revalidate);
-    }
   }
 
   private rerunCallBack(key: string) {
+    const pending = this.pendingMap.get(key);
+    if (pending) {
+      console.log("PENDING CACHE HIT:", key);
+      return pending;
+    }
+
     console.log("rerunning callback:", key);
     const result = this.callBackMap.get(key);
-    if (!result) return;
+    if (!result) {
+      throw new Error("No callback found for key: " + key);
+    }
     const { callBack, tags, cache } = result;
     const callBackPromise = callBack();
     this.pendingMap.set(key, callBackPromise);
@@ -111,15 +131,19 @@ class BethPersistCache {
   }
 
   private setInterval(key: string, revalidate: number) {
-    if (revalidate === Infinity) return;
-    const interval = setInterval(async () => {
+    if (revalidate === Infinity) {
+      console.log("No revalidate interval for:", key);
+      return;
+    }
+    const interval = setInterval(() => {
       console.log(`Cache Revalidating (on ${revalidate}s interval):`, key);
       this.rerunCallBack(key);
-    }, revalidate);
+    }, revalidate * 1000);
+    console.log("Setting Revalidate Interval:", key, revalidate);
     this.intervals.add(interval);
   }
 
-  private async getMemoryCache(key: string) {
+  private getMemoryCache(key: string) {
     const cacheResult = this.inMemoryDataCache.get(key);
     if (cacheResult) {
       console.log("Memory Cache HIT:", key);
@@ -142,7 +166,7 @@ class BethPersistCache {
     try {
       const pending = this.pendingMap.get(key);
       if (pending) {
-        console.log("STALE HIT, returning pending promise:", key);
+        console.log("PENDING CACHE HIT:", key);
         return pending;
       }
 
@@ -185,15 +209,12 @@ export function persistedCache<T extends () => Promise<any>>(
   const tags = options?.tags ?? [];
 
   console.log("Cache MISS: ", key);
-  callBack().then((result) => {
-    GLOBAL_CACHE.seed({
-      callBack,
-      key,
-      value: result,
-      tags,
-      revalidate,
-      cache: persist,
-    });
+  GLOBAL_CACHE.seed({
+    callBack,
+    key,
+    tags,
+    revalidate,
+    cache: persist,
   });
   return cache(() => GLOBAL_CACHE.getCachedValue(key, persist)) as T;
 }

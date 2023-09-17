@@ -3,8 +3,8 @@ import { Elysia } from "elysia";
 // import pretty from "pino-pretty";
 import { config } from "../config";
 import { client, db } from "../db";
-import "@kitajs/html/register";
-import "@kitajs/html/htmx";
+import "beth-jsx/register";
+import "beth-jsx/htmx";
 import { auth } from "../auth";
 // import { cron } from "@elysiajs/cron";
 
