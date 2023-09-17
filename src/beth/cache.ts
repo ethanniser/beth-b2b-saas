@@ -10,6 +10,7 @@ class BethPersistCache {
       cache: "memory" | "json";
     }
   >;
+  private pendingMap: Map<string, Promise<any>>;
   private inMemoryDataCache: Map<string, any>;
   private jsonDataCache: Database;
   private intervals: Set<NodeJS.Timeout>;
@@ -19,6 +20,7 @@ class BethPersistCache {
     this.inMemoryDataCache = new Map();
     this.jsonDataCache = new Database("beth-cache.sqlite");
     this.intervals = new Set();
+    this.pendingMap = new Map();
 
     this.jsonDataCache.exec(`
       DROP TABLE IF EXISTS cache;
@@ -91,6 +93,7 @@ class BethPersistCache {
     if (!result) return;
     const { callBack, tags, cache } = result;
     const callBackPromise = callBack();
+    this.pendingMap.set(key, callBackPromise);
     callBackPromise.then((value) => {
       if (cache === "memory") {
         this.inMemoryDataCache.set(key, value);
@@ -102,6 +105,7 @@ class BethPersistCache {
         tags,
         cache,
       });
+      this.pendingMap.delete(key);
     });
     return callBackPromise;
   }
@@ -136,6 +140,12 @@ class BethPersistCache {
 
   public getCachedValue(key: string, cache: "memory" | "json") {
     try {
+      const pending = this.pendingMap.get(key);
+      if (pending) {
+        console.log("STALE HIT, returning pending promise:", key);
+        return pending;
+      }
+
       if (cache === "memory") {
         return this.getMemoryCache(key);
       } else if (cache === "json") {
