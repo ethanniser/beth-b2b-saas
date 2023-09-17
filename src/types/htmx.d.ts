@@ -44,5 +44,6 @@ declare namespace JSX {
     ["hx-delete"]?: DeleteRoutes;
     ["hx-patch"]?: PatchRoutes;
     _?: string;
+    ["hx-revalidate"]?: string;
   }
 }
