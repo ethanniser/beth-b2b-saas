@@ -2,7 +2,7 @@ import Elysia from "elysia";
 import { BaseHtml } from "../components/base";
 import { ctx } from "../context";
 import { renderToString } from "beth-jsx";
-import { persistedCache, revalidateTag } from "../beth/cache";
+import { persistedCache, revalidateTag } from "beth-jsx";
 
 const start = Date.now();
 
@@ -26,15 +26,14 @@ export const index = new Elysia()
   })
   .get("/test", async () => {
     const time = await cachedGetTime();
-    return renderToString(() => <p safe>{time}</p>);
+    return renderToString(() => <p>{time}</p>);
   })
   .get("/", async ({ set }) => {
-    set.headers["content-type"] = "text/html";
     return renderToString(() => (
       <BaseHtml>
         <h1>cache revalidates on two second interval</h1>
         <button hx-get="/test" hx-target="#foo" hx-swap="beforeend">
-          click me to get time (cached)
+          click me to get time since start (cached)
         </button>
         <br />
         <br />
@@ -44,7 +43,7 @@ export const index = new Elysia()
           hx-swap="beforeend"
           hx-revalidate="time"
         >
-          click me (revalidate now)
+          click me to get time since start (revalidate now)
         </button>
         <div id="foo"></div>
       </BaseHtml>
