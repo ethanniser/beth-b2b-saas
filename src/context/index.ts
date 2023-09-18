@@ -1,11 +1,10 @@
 import { logger } from "@bogeychan/elysia-logger";
+import { bethStack } from "beth-stack/elysia";
 import { Elysia } from "elysia";
 import pretty from "pino-pretty";
+import { auth } from "../auth";
 import { config } from "../config";
 import { client, db } from "../db";
-import "beth-stack/jsx/register";
-import { bethStack } from "beth-stack/elysia";
-import { auth } from "../auth";
 
 // import { cron } from "@elysiajs/cron";
 
@@ -27,25 +26,25 @@ export const ctx = new Elysia({
       level: config.env.LOG_LEVEL,
       stream,
     }),
-  );
-// .use(
-//   cron({
-//     name: "heartbeat",
-//     pattern: "*/1 * * * * *",
-//     run() {
-//       if (config.env.SYNC_URL) {
-//         const now = performance.now();
-//         console.log("Syncing database...");
-//         void client.sync().then(() => {
-//           console.log(`Database synced in ${performance.now() - now}ms`);
-//         });
-//       }
-//     },
-//   })
-// )
-// .decorate("db", db)
-// .decorate("config", config)
-// .decorate("auth", auth)
+  )
+  // .use(
+  //   cron({
+  //     name: "heartbeat",
+  //     pattern: "*/1 * * * * *",
+  //     run() {
+  //       if (config.env.SYNC_URL) {
+  //         const now = performance.now();
+  //         console.log("Syncing database...");
+  //         void client.sync().then(() => {
+  //           console.log(`Database synced in ${performance.now() - now}ms`);
+  //         });
+  //       }
+  //     },
+  //   })
+  // )
+  // .decorate("db", db)
+  // .decorate("config", config)
+  .decorate("auth", auth);
 // .onStart(({ log }) => log.info("Server starting"))
 // .onStop(({ log }) => log.info("Server stopping"))
 // .onRequest(({ log, request }) => {

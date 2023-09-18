@@ -44,6 +44,7 @@ export const index = new Elysia()
         </button>
         <br />
         <div>hot reload</div>
+        <div class="i-logos-apple w-lg"></div>
         <br />
         <button
           hx-get="/test"
