@@ -19,7 +19,13 @@ export const index = new Elysia()
     const revalidate = request.headers.get("HX-Revalidate");
     if (revalidate) {
       const tags = JSON.parse(revalidate);
-      tags.forEach((tag: string) => {
+      if (!Array.isArray(tags)) {
+        return;
+      }
+      tags.forEach((tag) => {
+        if (typeof tag !== "string") {
+          return;
+        }
         revalidateTag(tag);
       });
     }
