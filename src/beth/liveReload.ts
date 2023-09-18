@@ -13,19 +13,19 @@ function dispatch() {
 const app = new Elysia()
   .ws("/ws", {
     open(ws) {
-      console.log("open");
+      // console.log("open");
       wsConnections.add(ws);
     },
     close(ws) {
-      console.log("close");
+      // console.log("close");
       wsConnections.delete(ws);
     },
     message(ws, message) {
-      console.log("message", message);
+      // console.log("message", message);
     },
   })
   .get("/restart", () => {
-    console.log("recieved restart");
+    // console.log("recieved restart");
     dispatch();
   })
   .listen(3001);

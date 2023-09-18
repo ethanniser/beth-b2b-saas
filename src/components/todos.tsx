@@ -43,7 +43,7 @@ export function TodoForm() {
       _="on submit target.reset()"
     >
       <select name="content" class="border border-black">
-        <option value="" disabled="true" selected="true">
+        <option value="" disabled={true} selected="true">
           Select a Todo
         </option>
         <option value="beth">Learn the BETH stack</option>

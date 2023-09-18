@@ -11,7 +11,8 @@
     "db:seed": "bun run src/model/store/seed.ts",
     "uno": "bunx unocss",
     "uno:dev": "bunx unocss --watch",
-    "typecheck": "bunx --bun tsc"
+    "typecheck": "bunx --bun tsc",
+    "cli": "bunx beth-stack foo bar"
   },
   "devDependencies": {
     "@kitajs/ts-html-plugin": "^1.0.1",
@@ -31,11 +32,10 @@
     "@t3-oss/env-core": "^0.6.1",
     "drizzle-orm": "^0.28.6",
     "drizzle-typebox": "^0.1.1",
-    "elysia": "link:elysia",
-    "elysia-autoroutes": "^0.2.2",
+    "elysia": "./elysia-0.7.0-exp.0.tgz",
     "lucia": "^2.6.0",
     "pino-pretty": "^10.2.0",
     "zod": "^3.22.2",
-    "beth-jsx": "link:beth-jsx"
+    "beth-stack": "0.0.3"
   }
 }

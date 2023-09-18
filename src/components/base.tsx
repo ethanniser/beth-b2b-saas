@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from "beth-jsx";
+import { type PropsWithChildren } from "beth-stack/jsx";
 import { config } from "../config";
 
 export const BaseHtml = ({ children }: PropsWithChildren) => (

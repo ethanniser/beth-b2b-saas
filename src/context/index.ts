@@ -3,8 +3,8 @@ import { Elysia } from "elysia";
 // import pretty from "pino-pretty";
 import { config } from "../config";
 import { client, db } from "../db";
-import "beth-jsx/register";
-import "beth-jsx/htmx";
+import "beth-stack/jsx/register";
+import { bethStack } from "beth-stack/elysia";
 import { auth } from "../auth";
 // import { cron } from "@elysiajs/cron";
 
@@ -14,11 +14,13 @@ import { auth } from "../auth";
 
 export const ctx = new Elysia({
   name: "@app/ctx",
-  cookie: {
-    secrets: config.env.COOKIE_SECRET,
-    sign: "session",
-  },
 })
+  .use(
+    bethStack({
+      log: true,
+      returnStaleWhileRevalidate: false,
+    })
+  )
   // .use(
   //   logger({
   //     level: config.env.LOG_LEVEL,
@@ -42,14 +44,7 @@ export const ctx = new Elysia({
   // )
   .decorate("db", db)
   .decorate("config", config)
-  .decorate("auth", auth)
-  .decorate(
-    "html",
-    (html: string) =>
-      new Response(html, {
-        headers: { "Content-Type": "text/html; charset=utf8" },
-      })
-  );
+  .decorate("auth", auth);
 // .onStart(({ log }) => log.info("Server starting"))
 // .onStop(({ log }) => log.info("Server stopping"))
 // .onRequest(({ log, request }) => {

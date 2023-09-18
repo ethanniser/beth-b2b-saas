@@ -9,7 +9,6 @@
     "noEmit": true,
     "composite": true,
     "strict": true,
-    // "noUncheckedIndexedAccess": true,
     "downlevelIteration": true,
     "skipLibCheck": true,
     "jsx": "react",
@@ -21,6 +20,14 @@
     "types": [
       "bun-types" // add Bun global
     ],
-    "plugins": [{ "name": "@kitajs/ts-html-plugin" }]
+    // non bun init
+    "plugins": [{ "name": "@kitajs/ts-html-plugin" }],
+    "noUncheckedIndexedAccess": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true
+    // "noImplicitReturns": true
   }
 }

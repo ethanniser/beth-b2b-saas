@@ -8,7 +8,7 @@ export const profile = new Elysia()
     const authRequest = auth.handleRequest(request);
 
     const session = await authRequest.validate();
-    return html(
+    return html(() =>
       session ? <div>Hello {session.user.email}</div> : <div>Not logged in</div>
     );
   });

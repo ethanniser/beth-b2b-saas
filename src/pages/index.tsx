@@ -1,8 +1,8 @@
-import Elysia from "elysia";
+import { Elysia } from "elysia";
 import { BaseHtml } from "../components/base";
 import { ctx } from "../context";
-import { Suspense, renderToStream, renderToString } from "beth-jsx";
-import { persistedCache, revalidateTag } from "beth-jsx";
+import { Suspense, renderToStream, renderToString } from "beth-stack/jsx";
+import { persistedCache, revalidateTag } from "beth-stack/cache";
 
 const start = Date.now();
 
@@ -24,18 +24,19 @@ export const index = new Elysia()
       });
     }
   })
-  .get("/test", async () => {
+  .get("/test", async ({ html }) => {
     const time = await cachedGetTime();
-    return renderToString(() => <p>{time}</p>);
+    return html(() => <p>{time}</p>);
   })
-  .get("/", async ({ set }) => {
-    return renderToString(() => (
+  .get("/", async ({ html }) => {
+    return html(() => (
       <BaseHtml>
-        <h1>cache revalidates on two second interval</h1>
+        <h1>cache revalidates every two seconds</h1>
         <button hx-get="/test" hx-target="#foo" hx-swap="beforeend">
           click me to get time since start (cached)
         </button>
         <br />
+        <div>hot reload</div>
         <br />
         <button
           hx-get="/test"
