@@ -1,6 +1,6 @@
-import { type PropsWithChildren } from "beth-stack/jsx";
-import { liveReloadScript } from "beth-stack/dev";
 import { htmxExtensionScript } from "beth-stack";
+import { liveReloadScript } from "beth-stack/dev";
+import { type PropsWithChildren } from "beth-stack/jsx";
 import { config } from "../config";
 
 const safeScript =

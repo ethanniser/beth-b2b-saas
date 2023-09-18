@@ -1,8 +1,8 @@
-import { Elysia } from "elysia";
 // import { swagger } from "@elysiajs/swagger";
 import { staticPlugin } from "@elysiajs/static";
-import { api } from "./controllers/*";
+import { Elysia } from "elysia";
 import { config } from "./config";
+import { api } from "./controllers/*";
 import { pages } from "./pages/*";
 
 const app = new Elysia()
@@ -24,5 +24,5 @@ const app = new Elysia()
 export type App = typeof app;
 
 console.log(
-  `app is listening on http://${app.server?.hostname}:${app.server?.port}`
+  `app is listening on http://${app.server?.hostname}:${app.server?.port}`,
 );

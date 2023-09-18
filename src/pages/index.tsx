@@ -1,8 +1,8 @@
+import { persistedCache, revalidateTag } from "beth-stack/cache";
+import { renderToStream, renderToString, Suspense } from "beth-stack/jsx";
 import { Elysia } from "elysia";
 import { BaseHtml } from "../components/base";
 import { ctx } from "../context";
-import { Suspense, renderToStream, renderToString } from "beth-stack/jsx";
-import { persistedCache, revalidateTag } from "beth-stack/cache";
 
 const start = Date.now();
 
@@ -58,7 +58,7 @@ function wait(ms: number): Promise<number> {
   return new Promise((resolve) =>
     setTimeout(() => {
       resolve(ms);
-    }, ms)
+    }, ms),
   );
 }
 

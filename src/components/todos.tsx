@@ -10,6 +10,7 @@ export function TodoItem({ content, completed, id }: Todo) {
         hx-post={`/api/todos/toggle/${id}`}
         hx-swap="outerHTML"
         hx-target="closest div"
+        class="p4 pt-2"
       />
       <button
         class="text-red-500"

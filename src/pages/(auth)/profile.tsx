@@ -9,6 +9,10 @@ export const profile = new Elysia()
 
     const session = await authRequest.validate();
     return html(() =>
-      session ? <div>Hello {session.user.email}</div> : <div>Not logged in</div>
+      session ? (
+        <div>Hello {session.user.email}</div>
+      ) : (
+        <div>Not logged in</div>
+      ),
     );
   });

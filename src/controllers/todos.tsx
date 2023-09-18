@@ -1,10 +1,9 @@
-import { Elysia, t } from "elysia";
-import { ctx } from "../context";
-import { insertTodoSchema, todos } from "../db/schema/todos";
-import { TodoItem, TodoForm, TodoList } from "../components/todos";
-
-import { client, db } from "../db";
 import { eq } from "drizzle-orm";
+import { Elysia, t } from "elysia";
+import { TodoForm, TodoItem, TodoList } from "../components/todos";
+import { ctx } from "../context";
+import { client, db } from "../db";
+import { insertTodoSchema, todos } from "../db/schema/todos";
 
 export const todosController = new Elysia({
   prefix: "/todos",
@@ -46,7 +45,7 @@ export const todosController = new Elysia({
       params: t.Object({
         id: t.Numeric(),
       }),
-    }
+    },
   )
   .delete(
     "/:id",
@@ -57,7 +56,7 @@ export const todosController = new Elysia({
       params: t.Object({
         id: t.Numeric(),
       }),
-    }
+    },
   )
   .post(
     "",
@@ -94,5 +93,5 @@ export const todosController = new Elysia({
           t.Literal("sub"),
         ]),
       }),
-    }
+    },
   );

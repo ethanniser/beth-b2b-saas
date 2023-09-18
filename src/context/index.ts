@@ -6,6 +6,7 @@ import { client, db } from "../db";
 import "beth-stack/jsx/register";
 import { bethStack } from "beth-stack/elysia";
 import { auth } from "../auth";
+
 // import { cron } from "@elysiajs/cron";
 
 // const stream = pretty({
@@ -19,7 +20,7 @@ export const ctx = new Elysia({
     bethStack({
       log: true,
       returnStaleWhileRevalidate: false,
-    })
+    }),
   )
   // .use(
   //   logger({
