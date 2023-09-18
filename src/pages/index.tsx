@@ -30,7 +30,8 @@ export const index = new Elysia()
       });
     }
   })
-  .get("/test", async ({ html }) => {
+  .get("/test", async ({ html, log }) => {
+    log.info("test");
     const time = await cachedGetTime();
     return html(() => <p>{time}</p>);
   })
