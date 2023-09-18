@@ -12,8 +12,8 @@
     "uno": "bunx unocss",
     "uno:dev": "bunx unocss --watch",
     "typecheck": "bunx --bun tsc",
-    "cli": "bunx beth-stack foo bar",
-    "reset-cache": "rm -rf /home/whatplan/.bun/install/cache && rm -rf node_modules && bun i"
+    "format:check": "prettier --check .",
+    "format": "prettier --write . --list-different"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
