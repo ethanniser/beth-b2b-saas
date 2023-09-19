@@ -58,8 +58,8 @@ export const index = new Elysia()
       </BaseHtml>
     ));
   })
-  .get("/test2", async () => {
-    return renderToStream(() => <App2 />);
+  .get("/test2", async ({ htmlStream }) => {
+    return htmlStream(() => <App2 />);
   });
 
 function wait(ms: number): Promise<number> {

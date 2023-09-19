@@ -37,6 +37,7 @@
     "@libsql/client": "0.3.5-pre.4",
     "@lucia-auth/adapter-sqlite": "^2.0.0",
     "@t3-oss/env-core": "^0.6.1",
+    "@tlscipher/holt": "^1.0.4",
     "beth-stack": "0.0.18",
     "drizzle-orm": "^0.28.6",
     "drizzle-typebox": "^0.1.1",

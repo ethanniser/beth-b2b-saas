@@ -1,4 +1,5 @@
 import { logger } from "@bogeychan/elysia-logger";
+// import { HoltLogger } from "@tlscipher/holt";
 import { bethStack } from "beth-stack/elysia";
 import { Elysia } from "elysia";
 import pretty from "pino-pretty";
@@ -43,7 +44,7 @@ export const ctx = new Elysia({
   //   })
   // )
   // .decorate("db", db)
-  // .decorate("config", config)
+  .decorate("config", config)
   .decorate("auth", auth);
 // .onStart(({ log }) => log.info("Server starting"))
 // .onStop(({ log }) => log.info("Server stopping"))
