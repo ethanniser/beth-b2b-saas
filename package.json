@@ -41,7 +41,7 @@
     "beth-stack": "0.0.18",
     "drizzle-orm": "^0.28.6",
     "drizzle-typebox": "^0.1.1",
-    "elysia": "0.7.0-beta.0",
+    "elysia": "0.7.0-beta.1",
     "lucia": "^2.6.0",
     "pino-pretty": "^10.2.0",
     "zod": "^3.22.2"
