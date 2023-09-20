@@ -1,12 +1,15 @@
-// import { swagger } from "@elysiajs/swagger";
 import { staticPlugin } from "@elysiajs/static";
+// import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import { config } from "./config";
 import { api } from "./controllers/*";
 import { pages } from "./pages/*";
 
-const app = new Elysia()
+const app = new Elysia({
+  name: "@app/app",
+})
   // .use(swagger())
+  //@ts-expect-error
   .use(staticPlugin())
   .use(api)
   .use(pages)

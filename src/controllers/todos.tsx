@@ -7,6 +7,7 @@ import { insertTodoSchema, todos } from "../db/schema/todos";
 
 export const todosController = new Elysia({
   prefix: "/todos",
+  name: "@controllers/todos",
 })
   .use(ctx)
   .get("/", async () => {

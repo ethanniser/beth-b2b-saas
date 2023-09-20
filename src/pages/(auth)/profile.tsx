@@ -2,7 +2,9 @@ import Elysia from "elysia";
 import { BaseHtml } from "../../components/base";
 import { ctx } from "../../context";
 
-export const profile = new Elysia()
+export const profile = new Elysia({
+  name: "@pages/auth/profile",
+})
   .use(ctx)
   .get("/profile", async ({ auth, html, request }) => {
     const authRequest = auth.handleRequest(request);

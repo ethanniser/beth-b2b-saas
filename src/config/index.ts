@@ -6,9 +6,10 @@ const env = createEnv({
     LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]),
     DATABASE_URL: z.string().min(1),
     DATABASE_AUTH_TOKEN: z.string().min(1),
-    // SYNC_URL: z.string().optional(),
+    SYNC_URL: z.string().optional(),
     NODE_ENV: z.enum(["development", "production"]),
     COOKIE_SECRET: z.string().min(1),
+    TURSO_API_TOKEN: z.string().min(1),
   },
   runtimeEnv: process.env,
 });

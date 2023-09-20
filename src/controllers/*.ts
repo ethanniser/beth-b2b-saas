@@ -5,5 +5,6 @@ import { todosController } from "./todos";
 
 export const api = new Elysia({
   prefix: "/api",
+  name: "@controllers",
 }).use(todosController);
 // .use(authController);

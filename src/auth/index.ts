@@ -1,6 +1,6 @@
 import { libsql } from "@lucia-auth/adapter-sqlite";
 import { lucia } from "lucia";
-import { web } from "lucia/middleware";
+import { elysia, web } from "lucia/middleware";
 import { config } from "../config";
 import { client } from "../db";
 

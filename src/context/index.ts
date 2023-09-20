@@ -1,5 +1,5 @@
 import { logger } from "@bogeychan/elysia-logger";
-// import { HoltLogger } from "@tlscipher/holt";
+import { HoltLogger } from "@tlscipher/holt";
 import { bethStack } from "beth-stack/elysia";
 import { Elysia } from "elysia";
 import pretty from "pino-pretty";
@@ -28,6 +28,7 @@ export const ctx = new Elysia({
       stream,
     }),
   )
+  .use(new HoltLogger().getLogger())
   // .use(
   //   cron({
   //     name: "heartbeat",
@@ -43,10 +44,10 @@ export const ctx = new Elysia({
   //     },
   //   })
   // )
-  // .decorate("db", db)
+  .decorate("db", () => db)
   .decorate("config", config)
   .decorate("auth", auth);
-// .onStart(({ log }) => log.info("Server starting"))
+// .onStart(({ log }) => log.info("Server starting"));
 // .onStop(({ log }) => log.info("Server stopping"))
 // .onRequest(({ log, request }) => {
 //   log.debug(`Request received: ${request.method}: ${request.url}`);
