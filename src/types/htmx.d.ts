@@ -28,6 +28,14 @@ type RouterPattern<T extends string> =
     ? `${Start}${string}`
     : T;
 
+type StartsWithApi<T extends string> = T extends `${"/api"}${infer Rest}`
+  ? T
+  : never;
+
+type DoesntStartWithApi<T extends string> = T extends `${"/api"}${infer Rest}`
+  ? never
+  : T;
+
 type Schema = import("../main").App["schema"];
 
 type PostRoutes = RoutesByType<Schema, "post">;
@@ -38,12 +46,15 @@ type PatchRoutes = RoutesByType<Schema, "patch">;
 
 declare namespace JSX {
   interface HtmlTag extends Htmx.Attributes {
-    ["hx-get"]?: GetRoutes;
-    ["hx-post"]?: PostRoutes;
-    ["hx-put"]?: PutRoutes;
-    ["hx-delete"]?: DeleteRoutes;
-    ["hx-patch"]?: PatchRoutes;
+    ["hx-get"]?: StartsWithApi<GetRoutes>;
+    ["hx-post"]?: StartsWithApi<PostRoutes>;
+    ["hx-put"]?: StartsWithApi<PutRoutes>;
+    ["hx-delete"]?: StartsWithApi<DeleteRoutes>;
+    ["hx-patch"]?: StartsWithApi<PatchRoutes>;
     _?: string;
-    ["hx-revalidate"]?: string;
+  }
+
+  interface HtmlAnchorTag {
+    href?: DoesntStartWithApi<GetRoutes>;
   }
 }

@@ -30,7 +30,7 @@ export const ctx = new Elysia({
   .use(new HoltLogger().getLogger())
   .use(
     // @ts-expect-error
-    cron({
+    config.env.DATABASE_CONNECTION_TYPE === 'local-replica' ? cron({
       name: "heartbeat",
       pattern: "*/2 * * * * *",
       run() {
@@ -40,7 +40,7 @@ export const ctx = new Elysia({
           console.log(`Database synced in ${performance.now() - now}ms`);
         });
       },
-    }),
+    }) : (a) => a,
   )
   .decorate("db", db)
   .decorate("config", config)

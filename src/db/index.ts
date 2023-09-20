@@ -3,18 +3,25 @@ import { drizzle } from "drizzle-orm/libsql";
 import { config } from "../config";
 import * as schema from "./schema";
 
-const remoteOptions = {
-  url: config.env.DATABASE_URL,
-  authToken: config.env.DATABASE_AUTH_TOKEN,
-};
 
-const localOptions = {
-  url: "file:local.sqlite",
-  authToken: config.env.DATABASE_AUTH_TOKEN,
-  syncUrl: config.env.DATABASE_URL,
-};
+const options = (() => {
+  switch (config.env.DATABASE_CONNECTION_TYPE) {
+    case 'local' : return { 
+      url: 'file:local.sqlite',
+    }
+    case 'remote' : return {
+      url: config.env.DATABASE_URL,
+      authToken: config.env.DATABASE_AUTH_TOKEN!,
+    }
+    case 'local-replica' : return {
+      url: 'file:local.sqlite',
+      syncUrl: config.env.DATABASE_URL,
+      authToken: config.env.DATABASE_AUTH_TOKEN!,
+    }
+  }
+})()
 
-export const client = createClient(localOptions);
+export const client = createClient(options);
 
 await client.sync();
 
