@@ -56,7 +56,7 @@ export const authController = new Elysia({
       body: t.Object({
         handle: t.String({
           minLength: 1,
-          maxLength: 10,
+          maxLength: 20,
         }),
         password: t.String({
           minLength: 4,
@@ -67,7 +67,10 @@ export const authController = new Elysia({
           signin: "signin",
         }), // Enum to validate action type
       }),
-      error({ code, error, set }) {
+      error({ code, error, set, log }) {
+
+        log.error(error);
+
         let errorMessage = "";
 
         if (code === "VALIDATION") {

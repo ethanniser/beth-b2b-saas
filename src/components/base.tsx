@@ -2,8 +2,13 @@ import { liveReloadScript } from "beth-stack/dev";
 import { type PropsWithChildren } from "beth-stack/jsx";
 import { config } from "../config";
 
+
 const safeScript =
-  config.env.NODE_ENV === "development" ? liveReloadScript() : "";
+  config.env.NODE_ENV === "development"
+    ? liveReloadScript({
+        url: "https://upgraded-orbit-qw9457vrwv39669-3001.app.github.dev/ws",
+      })
+    : "";
 
 export const BaseHtml = ({ children }: PropsWithChildren) => (
   <html>

@@ -35,7 +35,13 @@ export const tweetsController = new Elysia({
         throw new Error("Failed to create tweet");
       }
 
-      return <TweetCard {...tweet} />;
+      return (
+        <TweetCard
+          content={tweet.content}
+          createdAt={tweet.createdAt}
+          author={{ handle: session.user.handle }}
+        />
+      );
     },
     {
       body: t.Object({

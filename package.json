@@ -41,7 +41,7 @@
     "@lucia-auth/adapter-sqlite": "^2.0.0",
     "@t3-oss/env-core": "^0.6.1",
     "@tlscipher/holt": "1.1.0",
-    "beth-stack": "0.0.22",
+    "beth-stack": "0.0.24",
     "drizzle-orm": "^0.28.6",
     "drizzle-typebox": "^0.1.1",
     "elysia": "0.7.4",
