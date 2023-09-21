@@ -1,6 +1,5 @@
 import { libsql } from "@lucia-auth/adapter-sqlite";
-import { lucia } from "lucia";
-import { elysia, web } from "lucia/middleware";
+import { lucia, Middleware } from "lucia";
 import { config } from "../config";
 import { client } from "../db";
 
@@ -11,21 +10,45 @@ const envAliasMap = {
 
 const envAlias = envAliasMap[config.env.NODE_ENV];
 
+type ElysiaContext = {
+  request: Request;
+  set: {
+    headers: Record<string, string> & {
+      ["Set-Cookie"]?: string | string[];
+    };
+    status?: number | undefined | string;
+    redirect?: string | undefined;
+  };
+};
+
+export const elysia = (): Middleware<[ElysiaContext]> => {
+  return ({ args }) => {
+    const [{ request, set }] = args;
+    return {
+      request,
+      setCookie: (cookie) => {
+        const setCookieHeader = set.headers["Set-Cookie"] ?? [];
+        const setCookieHeaders: string[] = Array.isArray(setCookieHeader)
+          ? setCookieHeader
+          : [setCookieHeader];
+        setCookieHeaders.push(cookie.serialize());
+        set.headers["Set-Cookie"] = setCookieHeaders;
+      },
+    };
+  };
+};
+
 export const auth = lucia({
   env: envAlias,
-  middleware: web(),
-  sessionCookie: {
-    expires: false,
-  },
+  middleware: elysia(),
   adapter: libsql(client, {
     user: "user",
     key: "user_key",
     session: "user_session",
   }),
-
   getUserAttributes: (data) => {
     return {
-      email: data.email,
+      handle: data.handle,
     };
   },
 });

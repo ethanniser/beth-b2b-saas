@@ -53,8 +53,4 @@ declare namespace JSX {
     ["hx-patch"]?: StartsWithApi<PatchRoutes>;
     _?: string;
   }
-
-  interface HtmlAnchorTag {
-    href?: DoesntStartWithApi<GetRoutes>;
-  }
 }

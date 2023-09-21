@@ -1,2 +1,2 @@
-export { todos } from "./todos";
+export { tweets } from "./tweets";
 export * from "./auth";

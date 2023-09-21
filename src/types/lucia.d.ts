@@ -2,7 +2,7 @@
 declare namespace Lucia {
   type Auth = import("../auth/index").Auth;
   type DatabaseUserAttributes = {
-    email: string;
+    handle: string;
   };
   type DatabaseSessionAttributes = {};
 }
