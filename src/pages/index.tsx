@@ -1,7 +1,8 @@
+import { Suspense } from "beth-stack/jsx";
 import { Elysia } from "elysia";
 import { authed } from "../auth/middleware";
 import { BaseHtml } from "../components/base";
-import { TweetCreationForm, TweetList } from "../components/tweets";
+import { InitialTweetList, TweetCreationForm } from "../components/tweets";
 import { ctx } from "../context";
 
 export const index = new Elysia()
@@ -12,8 +13,8 @@ export const index = new Elysia()
 
     return { session };
   })
-  .get("/", async ({ html, session, db }) => {
-    return html(() => (
+  .get("/", async ({ htmlStream, session, db }) => {
+    return htmlStream(() => (
       <BaseHtml>
         <div class="flex flex-col items-center py-3">
           {session ? (
@@ -37,7 +38,7 @@ export const index = new Elysia()
               Sign In
             </a>
           )}
-          <TweetList />
+          <InitialTweetList />
         </div>
       </BaseHtml>
     ));

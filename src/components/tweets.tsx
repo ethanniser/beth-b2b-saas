@@ -20,16 +20,14 @@ export function TweetCard({
       <p class="text-gray-700" safe>
         {content}
       </p>
-      <span class="text-sm text-gray-500">
-        {createdAt.toLocaleString()}
-      </span>
+      <span class="text-sm text-gray-500">{createdAt.toLocaleString()}</span>
     </div>
   );
 }
 
-export async function TweetList() {
+export async function InitialTweetList() {
   const tweetData = await db.query.tweets.findMany({
-    limit: 10,
+    limit: 5,
     orderBy: (tweets, { desc }) => [desc(tweets.createdAt)],
     with: {
       author: {
@@ -40,12 +38,55 @@ export async function TweetList() {
     },
   });
 
+  const lastTweetTime = tweetData[tweetData.length - 1]?.createdAt;
+
   return (
-    <div class="space-y-4" id="tweetList">
+    <>
+      <div class="space-y-4" id="tweetList">
+        {tweetData.map((tweet) => (
+          <TweetCard {...tweet} />
+        ))}
+        <div
+          hx-get={`/api/tweets?after=${lastTweetTime?.toISOString()}`}
+          hx-swap="beforeend"
+          hx-target="#tweetList"
+          hx-trigger="revealed"
+        />
+      </div>
+    </>
+  );
+}
+
+export async function AdditionalTweetList({ after }: { after: Date }) {
+  const tweetData = await db.query.tweets.findMany({
+    where: (tweets, { lt }) => lt(tweets.createdAt, after),
+    limit: 5,
+    orderBy: (tweets, { desc }) => [desc(tweets.createdAt)],
+    with: {
+      author: {
+        columns: {
+          handle: true,
+        },
+      },
+    },
+  });
+
+  const lastTweetTime = tweetData[tweetData.length - 1]?.createdAt;
+
+  return (
+    <>
       {tweetData.map((tweet) => (
         <TweetCard {...tweet} />
       ))}
-    </div>
+      {lastTweetTime && (
+        <div
+          hx-get={`/api/tweets?after=${lastTweetTime.toISOString()}`}
+          hx-swap="beforeend"
+          hx-target="#tweetList"
+          hx-trigger="revealed"
+        />
+      )}
+    </>
   );
 }
 
@@ -53,7 +94,12 @@ export function TweetCreationForm() {
   return (
     <div class="rounded-lg border p-4 shadow-md">
       <h2 class="mb-4 text-xl font-bold">Create a new Tweet</h2>
-      <form hx-post="/api/tweets" hx-swap="afterbegin" hx-target="#tweetList"  _="on submit target.reset()">
+      <form
+        hx-post="/api/tweets"
+        hx-swap="afterbegin"
+        hx-target="#tweetList"
+        _="on submit target.reset()"
+      >
         <label class="mb-2 block text-sm font-bold" for="content">
           Tweet:
         </label>

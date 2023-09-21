@@ -46,11 +46,11 @@ type PatchRoutes = RoutesByType<Schema, "patch">;
 
 declare namespace JSX {
   interface HtmlTag extends Htmx.Attributes {
-    ["hx-get"]?: StartsWithApi<GetRoutes>;
-    ["hx-post"]?: StartsWithApi<PostRoutes>;
-    ["hx-put"]?: StartsWithApi<PutRoutes>;
-    ["hx-delete"]?: StartsWithApi<DeleteRoutes>;
-    ["hx-patch"]?: StartsWithApi<PatchRoutes>;
+    ["hx-get"]?: StartsWithApi<GetRoutes> | (string & {});
+    ["hx-post"]?: StartsWithApi<PostRoutes> | (string & {});
+    ["hx-put"]?: StartsWithApi<PutRoutes> | (string & {});
+    ["hx-delete"]?: StartsWithApi<DeleteRoutes> | (string & {});
+    ["hx-patch"]?: StartsWithApi<PatchRoutes> | (string & {});
     _?: string;
   }
 }

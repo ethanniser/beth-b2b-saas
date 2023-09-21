@@ -1,6 +1,6 @@
 import { Elysia, t } from "elysia";
 import { authed } from "../auth/middleware";
-import { TweetCard } from "../components/tweets";
+import { AdditionalTweetList, TweetCard } from "../components/tweets";
 import { ctx } from "../context";
 import { tweets } from "../db/schema/tweets";
 
@@ -14,6 +14,21 @@ export const tweetsController = new Elysia({
 
     return { session };
   })
+  .get(
+    "/",
+    async ({ query: { after } }) => {
+      const date = new Date(after);
+
+      return <AdditionalTweetList after={date} />;
+    },
+    {
+      query: t.Object({
+        after: t.String({
+          format: "date-time",
+        }),
+      }),
+    },
+  )
   .post(
     "/",
     async ({ session, db, body, set, log }) => {
