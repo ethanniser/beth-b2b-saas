@@ -18,7 +18,6 @@
     "lint:fix": "eslint . --report-unused-disable-directives --fix"
   },
   "devDependencies": {
-    "@flydotio/dockerfile": "latest",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
     "@kitajs/ts-html-plugin": "^1.0.1",
     "@total-typescript/ts-reset": "^0.5.1",
