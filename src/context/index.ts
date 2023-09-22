@@ -21,10 +21,6 @@ const loggerConfig =
       }
     : { level: config.env.LOG_LEVEL };
 
-function optionallyUse(condition: boolean, middleware: any): any {
-  return condition ? middleware : (a: any) => a;
-}
-
 export const ctx = new Elysia({
   name: "@app/ctx",
 })
