@@ -39,7 +39,7 @@
     "@elysiajs/swagger": "^0.6.2",
     "@iconify-json/logos": "^1.1.37",
     "@iconify-json/lucide": "^1.1.128",
-    "@libsql/client": "0.3.5-pre.9",
+    "@libsql/client": "0.3.5-pre.11",
     "@lucia-auth/adapter-sqlite": "^2.0.0",
     "@lucia-auth/oauth": "^3.2.0",
     "@t3-oss/env-core": "^0.6.1",
