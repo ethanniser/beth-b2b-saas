@@ -55,32 +55,28 @@ export const ctx = new Elysia({
         })
       : (a) => a,
   )
-  .use(
-    // @ts-expect-error
-    config.env.NODE_ENV === "production"
-      ? (
-          e: Elysia<
-            "",
-            {
-              request: {
-                log: Logger;
-              };
-              store: {};
-            }
-          >,
-        ) =>
-          e
-            .onStart(({ log }) => log.info("Server starting"))
-            .onStop(({ log }) => log.info("Server stopping"))
-            .onRequest(({ log, request }) => {
-              console.log(typeof log);
-              log.debug(`Request received: ${request.method}: ${request.url}`);
-            })
-            .onResponse(({ log, request, set }) => {
-              log.debug(
-                `Response sent: ${request.method}: ${request.url} with status ${set.status}`,
-              );
-            })
-            .onError(({ log, error }) => log.error(error))
-      : (a) => a,
-  );
+  .onStart(({ log }) => {
+    if (log && config.env.NODE_ENV === "production") {
+      log.info("Server started");
+    }
+  })
+  .onStop(({ log }) => {
+    if (log && config.env.NODE_ENV === "production") {
+      log.info("Server stopped");
+    }
+  })
+  .onRequest(({ log, request }) => {
+    if (log && config.env.NODE_ENV === "production") {
+      log.debug(`Request received: ${request.method}: ${request.url}`);
+    }
+  })
+  .onResponse(({ log, request, set }) => {
+    if (log && config.env.NODE_ENV === "production") {
+      log.debug(`Response sent: ${request.method}: ${request.url}`);
+    }
+  })
+  .onError(({ log, error }) => {
+    if (log && config.env.NODE_ENV === "production") {
+      log.error(error);
+    }
+  });

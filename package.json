@@ -17,6 +17,7 @@
     "reset-cache": "rm -rf /home/whatplan/.bun/install/cache && rm -rf node_modules && bun i"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "latest",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
     "@kitajs/ts-html-plugin": "^1.0.1",
     "@total-typescript/ts-reset": "^0.5.1",
