@@ -1,4 +1,5 @@
 import { libsql } from "@lucia-auth/adapter-sqlite";
+import { github } from "@lucia-auth/oauth/providers";
 import { lucia, Middleware } from "lucia";
 import { config } from "../config";
 import { client } from "../db";
@@ -54,3 +55,8 @@ export const auth = lucia({
 });
 
 export type Auth = typeof auth;
+
+export const githubAuth = github(auth, {
+  clientId: config.env.GITHUB_CLIENT_ID,
+  clientSecret: config.env.GITHUB_CLIENT_SECRET,
+});

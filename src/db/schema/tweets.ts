@@ -15,6 +15,7 @@ export const tweets = sqliteTable(
   (table) => {
     return {
       authorIdx: index("author_idx").on(table.authorId),
+      createdAtIdx: index("created_at_idx").on(table.createdAt),
     };
   },
 );

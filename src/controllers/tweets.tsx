@@ -1,3 +1,4 @@
+import { eq } from "drizzle-orm";
 import { Elysia, t } from "elysia";
 import { authed } from "../auth/middleware";
 import { AdditionalTweetList, TweetCard } from "../components/tweets";
@@ -55,6 +56,7 @@ export const tweetsController = new Elysia({
           content={tweet.content}
           createdAt={tweet.createdAt}
           author={{ handle: session.user.handle }}
+          id={tweet.id}
         />
       );
     },
@@ -64,6 +66,51 @@ export const tweetsController = new Elysia({
           minLength: 1,
           maxLength: 280,
         }),
+      }),
+    },
+  )
+  .delete(
+    "/:tweetId",
+    async ({ session, db, params: { tweetId }, set, log }) => {
+      if (!session) {
+        set.status = "Unauthorized";
+        return (
+          <div id="tweetDeleteError" class="text-center text-red-500">
+            Unauthorized
+          </div>
+        );
+      }
+
+      const [tweet] = await db
+        .select()
+        .from(tweets)
+        .where(eq(tweets.id, tweetId));
+
+      log.debug(tweet);
+
+      if (!tweet) {
+        set.status = "Not Found";
+        return (
+          <div id="tweetDeleteError" class="text-center text-red-500">
+            Tweet not found
+          </div>
+        );
+      }
+
+      if (tweet.authorId !== session.user.userId) {
+        set.status = "Unauthorized";
+        return (
+          <div id="tweetDeleteError" class="text-center text-red-500">
+            Unauthorized
+          </div>
+        );
+      }
+
+      await db.delete(tweets).where(eq(tweets.id, tweetId));
+    },
+    {
+      params: t.Object({
+        tweetId: t.Numeric(),
       }),
     },
   );

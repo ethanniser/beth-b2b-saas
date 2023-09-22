@@ -5,22 +5,39 @@ export function TweetCard({
   author: { handle },
   createdAt,
   content,
+  id,
 }: {
   createdAt: Date;
   content: string;
   author: {
     handle: string;
   };
+  id: number;
 }) {
   return (
-    <div class="rounded-lg border p-4 shadow-md">
+    <div
+      class="rounded-lg border p-4 shadow-md"
+      id={`tweet-${id}`}
+      hx-ext="response-targets"
+    >
       <h2 class="text-xl font-bold" safe>
         @{handle}
       </h2>
       <p class="text-gray-700" safe>
         {content}
       </p>
-      <span class="text-sm text-gray-500">{createdAt.toLocaleString()}</span>
+      <div class="flex flex-row justify-between">
+        <span class="text-sm text-gray-500">{createdAt.toLocaleString()}</span>
+        <button
+          class="i-lucide-x text-lg text-red-500"
+          hx-delete={`/api/tweets/${id}`}
+          hx-target={`#tweet-${id}`}
+          hx-swap="outerHTML"
+          hx-target-4xx="next #tweetDeleteError"
+          hx-confirm="Are you sure you want to delete this tweet?"
+        />
+      </div>
+      <div id="tweetDeleteError" />
     </div>
   );
 }
