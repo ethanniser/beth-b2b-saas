@@ -3,7 +3,7 @@ import { Elysia, t } from "elysia";
 import { authed } from "../auth/middleware";
 import { AdditionalTweetList, TweetCard } from "../components/tweets";
 import { ctx } from "../context";
-import { tweets } from "../db/schema/tweets";
+import { tweets } from "../db/primary/schema/buisnesses";
 
 export const tweetsController = new Elysia({
   prefix: "/tweets",

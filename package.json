@@ -25,7 +25,6 @@
     "better-sqlite3": "^8.6.0",
     "bun-types": "latest",
     "concurrently": "^8.2.1",
-    "drizzle-kit": "^0.19.13",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
     "eslint": "^8.49.0",
@@ -42,6 +41,7 @@
     "unocss": "^0.55.7"
   },
   "dependencies": {
+    "drizzle-kit": "^0.19.13",
     "@bogeychan/elysia-logger": "0.0.9",
     "@elysiajs/cron": "^0.6.0",
     "@elysiajs/static": "^0.6.0",
@@ -56,7 +56,7 @@
     "beth-stack": "0.0.27",
     "drizzle-orm": "^0.28.6",
     "drizzle-typebox": "^0.1.1",
-    "elysia": "0.7.4",
+    "elysia": "0.7.10",
     "libsql": "^0.1.13",
     "lucia": "^2.6.0",
     "pino-pretty": "^10.2.0",

@@ -1,5 +1,5 @@
 import { db } from "../db";
-import { tweets } from "../db/schema/tweets";
+import { tweets } from "../db/primary/schema/buisnesses";
 
 export function TweetCard({
   author: { handle },

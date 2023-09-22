@@ -4,7 +4,7 @@ import { z } from "zod";
 const env = createEnv({
   server: {
     LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]),
-    DATABASE_CONNECTION_TYPE: z.enum(["local", "remote", "local-replica"]),
+    DATABASE_CONNECTION_TYPE: z.enum(["remote", "local-replica"]),
     DATABASE_URL: z.string().min(1),
     DATABASE_AUTH_TOKEN: z
       .string()
