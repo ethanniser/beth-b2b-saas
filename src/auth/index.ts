@@ -1,8 +1,8 @@
 import { libsql } from "@lucia-auth/adapter-sqlite";
-import { github } from "@lucia-auth/oauth/providers";
+import { google } from "@lucia-auth/oauth/providers";
 import { lucia, Middleware } from "lucia";
 import { config } from "../config";
-import { client } from "../db";
+import { client } from "../db/primary";
 
 const envAliasMap = {
   production: "PROD",
@@ -49,14 +49,22 @@ export const auth = lucia({
   }),
   getUserAttributes: (data) => {
     return {
-      handle: data.handle,
+      name: data.name,
+      email: data.email,
+      picture: data.picture,
+      id: data.id,
+      role: data.role,
+      buisnessId: data.buisnessId,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
     };
   },
 });
 
 export type Auth = typeof auth;
 
-export const githubAuth = github(auth, {
-  clientId: config.env.GITHUB_CLIENT_ID,
-  clientSecret: config.env.GITHUB_CLIENT_SECRET,
+export const googleAuth = google(auth, {
+  clientId: config.env.GOOGLE_CLIENT_ID,
+  clientSecret: config.env.GOOGLE_CLIENT_SECRET,
+  redirectUri: "http://localhost:3000/api/auth/login/google/callback",
 });

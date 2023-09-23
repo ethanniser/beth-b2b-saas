@@ -3,18 +3,22 @@ import { blob, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { buisnesses } from ".";
 
 export const user = sqliteTable("user", {
+  // lucia mandatory
   id: text("id").primaryKey(),
+
+  // other
   role: text("role", { enum: ["admin", "user"] })
     .notNull()
     .default("user"),
 
   // google auth stuff
-  email: text("email").notNull(),
+  email: text("email"),
   name: text("name").notNull(),
   picture: text("picture").notNull(),
 
   // relations
-  buisnessId: integer("buisness_id", { mode: "number" }).notNull(),
+  buisnessId: integer("buisness_id", { mode: "number" }),
+
   createdAt: integer("createdAt", { mode: "timestamp" })
     .notNull()
     .$defaultFn(() => new Date()),
