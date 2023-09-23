@@ -4,15 +4,15 @@ import { drizzle } from "drizzle-orm/libsql";
 import * as schema from "./schema";
 
 export function getTenantDb({
-  database_url,
-  database_auth_token,
+  dbName,
+  authToken,
 }: {
-  database_url: string;
-  database_auth_token: string;
+  dbName: string;
+  authToken: string;
 }) {
   const client = createClient({
-    url: database_url,
-    authToken: database_auth_token,
+    url: `libsql://${dbName}-ethanniser.turso.io`,
+    authToken,
   });
 
   const db = drizzle(client, { schema, logger: true });
@@ -32,7 +32,7 @@ const getConfigText = ({
   authToken: string;
 }) => `
   export default {
-  schema: "./src/db/primary/schema/index.ts",
+  schema: "./src/db/tenant/schema/index.ts",
   driver: "turso",
   dbCredentials: {
     url: "${url}",
@@ -42,13 +42,12 @@ const getConfigText = ({
 }`;
 
 export async function pushToTenantDb({
-  url,
+  dbName,
   authToken,
 }: {
-  url: string;
+  dbName: string;
   authToken: string;
 }) {
-  const schemaPath = "./src/db/tenant/schema/index.ts";
   const configPath = "./src/db/tenant/temp-drizzle.config.ts";
 
   const command = [
@@ -67,7 +66,7 @@ export async function pushToTenantDb({
     configPath,
     getConfigText({
       authToken,
-      url,
+      url: `libsql://${dbName}-ethanniser.turso.io`,
     }),
   );
 

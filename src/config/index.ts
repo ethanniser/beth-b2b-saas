@@ -19,6 +19,7 @@ const env = createEnv({
     NODE_ENV: z.enum(["development", "production"]),
     GOOGLE_CLIENT_ID: z.string().min(1),
     GOOGLE_CLIENT_SECRET: z.string().min(1),
+    TURSO_API_TOKEN: z.string().min(1),
   },
   runtimeEnv: process.env,
 });

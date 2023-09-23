@@ -1,5 +1,5 @@
 import { staticPlugin } from "@elysiajs/static";
-// import { swagger } from "@elysiajs/swagger";
+import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import { config } from "./config";
 import { ctx } from "./context";
@@ -7,7 +7,7 @@ import { api } from "./controllers/*";
 import { pages } from "./pages/*";
 
 const app = new Elysia()
-  // .use(swagger())
+  .use(swagger())
   // @ts-expect-error
   .use(staticPlugin())
   .use(api)

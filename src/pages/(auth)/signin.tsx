@@ -7,6 +7,7 @@ export const login = new Elysia().use(ctx).get("/login", async (ctx) => {
   const session = await authRequest.validate();
   if (session) {
     ctx.set.redirect = "/";
+    ctx.set.headers["HX-Location"] = "/";
     return;
   }
 

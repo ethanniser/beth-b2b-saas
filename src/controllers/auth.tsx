@@ -11,13 +11,14 @@ export const authController = new Elysia({
 })
   .use(ctx)
   .get("/test", () => "test")
-  .post("/signout", async (ctx) => {
+  .get("/signout", async (ctx) => {
     const authRequest = ctx.auth.handleRequest(ctx);
     const session = await authRequest.validate();
 
     if (!session) {
-      ctx.set.status = "Unauthorized";
-      return "You are not logged in";
+      ctx.set.redirect = "/";
+      ctx.set.headers["HX-Location"] = "/";
+      return;
     }
 
     await ctx.auth.invalidateSession(session.sessionId);
@@ -26,6 +27,7 @@ export const authController = new Elysia({
 
     ctx.set.headers["Set-Cookie"] = sessionCookie.serialize();
     ctx.set.redirect = "/";
+    ctx.set.headers["HX-Location"] = "/";
   })
   .get("/login/google", async ({ set }) => {
     const [url, state] = await googleAuth.getAuthorizationUrl();

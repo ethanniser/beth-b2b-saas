@@ -1,8 +1,8 @@
 import { logger } from "@bogeychan/elysia-logger";
-import { Logger } from "@bogeychan/elysia-logger/types";
 import { cron } from "@elysiajs/cron";
 import { HoltLogger } from "@tlscipher/holt";
 import { bethStack } from "beth-stack/elysia";
+import { TursoClient } from "beth-stack/turso";
 import { Elysia } from "elysia";
 import pretty from "pino-pretty";
 import { auth } from "../auth";
@@ -12,6 +12,8 @@ import { client, db } from "../db/primary";
 const stream = pretty({
   colorize: true,
 });
+
+const turso = new TursoClient(config.env.TURSO_API_TOKEN);
 
 const loggerConfig =
   config.env.NODE_ENV === "development"
@@ -27,6 +29,7 @@ export const ctx = new Elysia({
   .decorate("db", db)
   .decorate("config", config)
   .decorate("auth", auth)
+  .decorate("turso", turso)
   .use(bethStack())
   .use(logger(loggerConfig))
   .use(
