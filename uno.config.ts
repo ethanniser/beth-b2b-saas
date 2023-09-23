@@ -8,6 +8,15 @@ export default defineConfig({
       outFile: "public/dist/unocss.css",
     },
   },
-  presets: [presetWind(), presetIcons(), presetWebFonts()],
+  presets: [
+    presetWind(),
+    presetIcons(),
+    presetWebFonts({
+      provider: "google",
+      fonts: {
+        inter: "Inter",
+      },
+    }),
+  ],
   transformers: [transformerVariantGroup()],
 });

@@ -1,6 +1,5 @@
-import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-typebox";
-import { user } from ".";
 
 export const buisnesses = sqliteTable("buisnesses", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),

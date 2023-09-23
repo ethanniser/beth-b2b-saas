@@ -34,6 +34,8 @@ export const BaseHtml = ({ children }: PropsWithChildren) => (
       </style>
       <script>{safeScript}</script>
     </head>
-    <body hx-boost="true">{children}</body>
+    <body hx-boost="true" class="font-inter">
+      {children}
+    </body>
   </html>
 );
