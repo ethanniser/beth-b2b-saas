@@ -7,6 +7,7 @@
     "liveReload": "bunx beth-stack",
     "start": "bun run uno && bun run src/main.ts",
     "db:push": "bunx drizzle-kit push:sqlite",
+    "db:push:tenants": "bun run ./src/db/tenant/migrate.ts",
     "db:studio": "bunx drizzle-kit studio",
     "db:seed": "bun run src/model/store/seed.ts",
     "uno": "bunx --bun unocss",
