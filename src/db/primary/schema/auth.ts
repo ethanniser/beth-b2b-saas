@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { blob, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { blob, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { organizations } from ".";
 
 export const user = sqliteTable("user", {
@@ -7,7 +7,7 @@ export const user = sqliteTable("user", {
   name: text("name").notNull(),
   email: text("email"),
   picture: text("picture").notNull(),
-  organization_id: text("organization_id"),
+  organization_id: integer("organization_id"),
   // other user attributes
 });
 

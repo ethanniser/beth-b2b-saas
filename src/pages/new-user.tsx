@@ -19,10 +19,26 @@ export const newUser = new Elysia()
 
     return html(() => (
       <BaseHtml>
-        <div>
-          <h1 safe>hi new user {session.user.name}</h1>
+        <main class="flex w-full flex-col items-center justify-center gap-5">
+          <h1 safe class="text-3xl font-bold">
+            hi new user {session.user.name}
+          </h1>
           <p>Do you want to join or create a organization?</p>
-        </div>
+          <form
+            class="flex flex-col items-center justify-center gap-5"
+            hx-post="/api/organization"
+          >
+            <input name="organizationName" placeholder="organization name" />
+            <button type="submit">create organization</button>
+          </form>
+          <form
+            class="flex flex-col items-center justify-center gap-5"
+            hx-post="/api/organization/join"
+          >
+            <input name="organizationCode" placeholder="organization code" />
+            <button type="submit">join organization</button>
+          </form>
+        </main>
       </BaseHtml>
     ));
   });

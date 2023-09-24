@@ -52,6 +52,7 @@
     "@libsql/client": "0.3.5-pre.13",
     "@lucia-auth/adapter-sqlite": "^2.0.0",
     "@lucia-auth/oauth": "^3.2.0",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@t3-oss/env-core": "^0.6.1",
     "@tlscipher/holt": "1.1.0",
     "beth-stack": "0.0.33",
