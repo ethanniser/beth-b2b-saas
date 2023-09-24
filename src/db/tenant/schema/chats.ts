@@ -13,7 +13,9 @@ export const chats = sqliteTable(
     sender: text("status", {
       enum: ["employee", "costomer"],
     }).notNull(),
-    timestamp: integer("timestamp", { mode: "timestamp" }).notNull(),
+    timestamp: integer("timestamp", { mode: "timestamp" })
+      .notNull()
+      .$defaultFn(() => new Date()),
   },
   (table) => ({
     ticket_id_index: index("ticket_id_index").on(table.ticket_id),

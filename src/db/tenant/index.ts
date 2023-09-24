@@ -17,11 +17,11 @@ export function getTenantDb({
     authToken,
   });
 
-  const tenantTb = drizzle(tenantClient, { schema, logger: true });
+  const tenantDb = drizzle(tenantClient, { schema, logger: true });
 
   return {
     tenantClient,
-    tenantTb,
+    tenantDb,
   };
 }
 

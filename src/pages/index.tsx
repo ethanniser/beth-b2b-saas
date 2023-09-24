@@ -16,6 +16,12 @@ export const index = new Elysia()
                 Hi! {session.user.name}
               </h1>
               <a
+                href="/dashboard"
+                class="mt-4 rounded-lg bg-green-500 px-4 py-2 text-white transition duration-200 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
+              >
+                Visit Dashboard
+              </a>
+              <a
                 href="/api/auth/signout"
                 class="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white transition duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               >

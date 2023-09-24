@@ -1,6 +1,10 @@
+import { and, eq, gt, lt, sql } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { BaseHtml } from "../components/base";
+import { Dashboard } from "../components/dashboard";
 import { ctx } from "../context";
+import { getTenantDb } from "../db/tenant";
+import { tickets } from "../db/tenant/schema";
 import { redirect } from "../lib";
 
 export const dashboard = new Elysia()
@@ -27,11 +31,104 @@ export const dashboard = new Elysia()
       return;
     }
 
+    const { tenantDb } = getTenantDb({
+      dbName: organization.database_name,
+      authToken: organization.database_auth_token,
+    });
+
+    const [[openTickets], [closedTicketsInLastWeek]] = await tenantDb.batch([
+      tenantDb
+        .select({
+          count: sql<number>`count(*)`,
+        })
+        .from(tickets)
+        .where(eq(tickets.status, "open")),
+      tenantDb
+        .select({
+          count: sql<number>`count(*)`,
+        })
+        .from(tickets)
+        .where(
+          and(
+            eq(tickets.status, "closed"),
+            gt(
+              tickets.closed_at,
+              new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+            ),
+            lt(tickets.closed_at, new Date(Date.now())),
+          ),
+        ),
+    ]);
+
+    const openTicketCount = openTickets?.count ?? 0;
+    const closedTicketCountInLastWeek = closedTicketsInLastWeek?.count ?? 0;
+
     return html(() => (
       <BaseHtml>
-        <h1>
-          {organization.name} - {session.user.name}
-        </h1>
+        <Dashboard>
+          <main class="flex-1 space-y-4 py-5">
+            <div class="relative flex items-center justify-between px-6 py-3">
+              <div>
+                <h2 class="text-5xl" safe>
+                  Welcome, {session.user.name}
+                </h2>
+                <p class="text-xl">Here is the overview of your account:</p>
+              </div>
+
+              <div class="pr-10 text-right text-5xl" safe>
+                {organization.name}
+              </div>
+
+              <div class="absolute inset-x-0 bottom-0 h-1 shadow-md"></div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-5 px-5 md:grid-cols-2 lg:grid-cols-3">
+              <Card
+                name="Unclosed Tickets"
+                value={openTicketCount.toString()}
+                href="/tickets"
+              />
+              <Card
+                name="Tickets Closed Today"
+                value={closedTicketCountInLastWeek.toString()}
+                href="/tickets"
+              />
+              <Card
+                name="Customer Satisfaction This Week"
+                value="50%"
+                href="#"
+              />
+            </div>
+          </main>
+        </Dashboard>
       </BaseHtml>
     ));
   });
+
+function Card({
+  name,
+  value,
+  href,
+}: {
+  name: string;
+  value: string;
+  href: string;
+}) {
+  return (
+    <div class="relative rounded-md border p-5 ">
+      <h3 class="text-xl">{name}</h3>
+      <p class="font-bold">{value}</p>
+      <a
+        href={href}
+        class="group absolute bottom-3 right-3 flex flex-row items-center
+          gap-3 rounded-lg bg-gray-200 px-4
+          py-2
+          text-gray-700 transition duration-200 hover:bg-gray-300 hover:text-gray-800
+        "
+      >
+        <span>View</span>
+        <div class="i-lucide-arrow-up-right transform transition-transform duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      </a>
+    </div>
+  );
+}

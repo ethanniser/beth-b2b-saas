@@ -11,8 +11,13 @@ export const tickets = sqliteTable(
     description: text("description").notNull(),
     status: text("status", {
       enum: ["open", "closed"],
-    }).notNull(),
-    created_at: integer("created_at", { mode: "timestamp" }).notNull(),
+    })
+      .notNull()
+      .$default(() => "open"),
+    created_at: integer("created_at", { mode: "timestamp" })
+      .notNull()
+
+      .$defaultFn(() => new Date()),
     updated_at: integer("updated_at", { mode: "timestamp" }),
     closed_at: integer("closed_at", { mode: "timestamp" }),
   },
