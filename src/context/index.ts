@@ -7,7 +7,7 @@ import { Elysia } from "elysia";
 import pretty from "pino-pretty";
 import { auth } from "../auth";
 import { config } from "../config";
-import { client, db } from "../db";
+import { client, db } from "../db/primary";
 
 const stream = pretty({
   colorize: true,
