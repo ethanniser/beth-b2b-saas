@@ -13,7 +13,15 @@ export const BaseHtml = ({ children }: PropsWithChildren) => (
       <title>THE BETH STACK</title>
       <script src="https://unpkg.com/htmx.org@1.9.5"></script>
       <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
+      <script src="https://unpkg.com/htmx.org/dist/ext/loading-states.js"></script>
       <script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
+      <style>
+        {`
+          [data-loading] {
+            display: none;
+          }
+        `}
+      </style>
       <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@unocss/reset/tailwind.min.css"
@@ -21,10 +29,7 @@ export const BaseHtml = ({ children }: PropsWithChildren) => (
       <link rel="stylesheet" href="/public/dist/unocss.css" />
       <script>{safeScript}</script>
     </head>
-    <body hx-boost="true" class="h-screen">
-      <h1 class=" bg-blue-500 p-5 text-center text-3xl font-bold text-white shadow-md">
-        BETH B2B SAAS CUSTOMER
-      </h1>
+    <body hx-boost="true" hx-ext="loading-states">
       {children}
     </body>
   </html>

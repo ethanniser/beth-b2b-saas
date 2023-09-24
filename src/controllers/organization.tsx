@@ -133,4 +133,7 @@ export const organizationsController = new Elysia({
         }),
       }),
     },
-  );
+  )
+  .post("/test", async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  });
