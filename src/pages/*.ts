@@ -5,11 +5,11 @@ import { dashboard } from "./dashboard";
 import { index } from "./index";
 import { newUser } from "./new-user";
 import { organization } from "./organization";
-import { tickets } from "./tickets";
+import { ticketsRoute } from "./tickets";
 
 export const pages = new Elysia()
   .use(index)
-  .use(tickets)
+  .use(ticketsRoute)
   .use(orgId)
   .use(organization)
   .use(authGroup)

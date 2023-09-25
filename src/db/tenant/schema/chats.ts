@@ -29,3 +29,5 @@ export const chatsRelations = relations(chats, ({ one }) => ({
     references: [tickets.id],
   }),
 }));
+
+export type Chat = typeof chats.$inferSelect;
