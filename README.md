@@ -1,3 +1,10 @@
+# LOOKING TO CONTRIBUTE?
+
+## I am keeping this repo identical for people following along with the video, feel free to open an issue or a pull request on [the template `create-beth-app` uses](https://github.com/ethanniser/beth-big)
+
+
+
+
 # This project was created using `create-beth-app`
 ## To open an issue: https://github.com/ethanniser/the-beth-stack
 ## To discuss: https://discord.gg/Z3yUtMfkwa
