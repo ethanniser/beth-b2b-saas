@@ -1,29 +1,24 @@
-import { createClient } from "@libsql/client";
+import { createClient, type Config } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 import { config } from "../../config";
 import * as schema from "./schema";
 
-const options = (() => {
-  switch (config.env.DATABASE_CONNECTION_TYPE) {
-    case "local":
-      return {
-        url: "file:local.sqlite",
-      };
-    case "remote":
-      return {
-        url: config.env.DATABASE_URL,
-        authToken: config.env.DATABASE_AUTH_TOKEN!,
-      };
-    case "local-replica":
-      return {
-        url: "file:local.sqlite",
-        syncUrl: config.env.DATABASE_URL,
-        authToken: config.env.DATABASE_AUTH_TOKEN!,
-      };
-  }
-})();
+const { DATABASE_CONNECTION_TYPE } = config.env;
 
-export const client = createClient(options);
+const options = {
+  local: { url: "file:local.sqlite" },
+  remote: {
+    url: config.env.DATABASE_URL,
+    authToken: config.env.DATABASE_AUTH_TOKEN!,
+  },
+  "local-replica": {
+    url: "file:local.sqlite",
+    syncUrl: config.env.DATABASE_URL,
+    authToken: config.env.DATABASE_AUTH_TOKEN!,
+  },
+} satisfies Record<typeof DATABASE_CONNECTION_TYPE, Config>;
+
+export const client = createClient(options[DATABASE_CONNECTION_TYPE]);
 
 await client.sync();
 
