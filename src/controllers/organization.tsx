@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
 import { Elysia, t } from "elysia";
+import { config } from "../config";
 import { ctx } from "../context";
 import { organizations, user } from "../db/primary/schema";
 import { pushToTenantDb } from "../db/tenant";
@@ -33,7 +34,7 @@ export const organizationsController = new Elysia({
       });
 
       const { jwt } = await turso.logicalDatabases.mintAuthToken(
-        "ethanniser",
+        config.env.TURSO_ORG_SLUG,
         dbName,
       );
 
