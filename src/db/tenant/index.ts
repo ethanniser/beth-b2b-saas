@@ -1,6 +1,7 @@
 import { unlinkSync } from "fs";
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
+import { config } from "../../config";
 import * as schema from "./schema";
 
 export function getTenantDb({
@@ -10,7 +11,7 @@ export function getTenantDb({
   dbName: string;
   authToken: string;
 }) {
-  const fullUrl = `libsql://${dbName}-ethanniser.turso.io`;
+  const fullUrl = `libsql://${dbName}-${config.env.TURSO_ORG_SLUG}.turso.io`;
 
   const tenantClient = createClient({
     url: fullUrl,
@@ -41,7 +42,7 @@ export async function pushToTenantDb({
     schema: "./src/db/tenant/schema/index.ts",
     driver: "turso",
     dbCredentials: {
-      url: "libsql://${dbName}-ethanniser.turso.io",
+      url: "libsql://${dbName}-${config.env.TURSO_ORG_SLUG}.turso.io",
       authToken: "${authToken}",
     },
     tablesFilter: ["!libsql_wasm_func_table"],

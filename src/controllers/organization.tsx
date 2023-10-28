@@ -11,7 +11,7 @@ export const organizationsController = new Elysia({
   .use(ctx)
   .post(
     "/",
-    async ({ body, session, set, headers, turso, db }) => {
+    async ({ body, session, set, headers, turso, db, config }) => {
       if (!session) {
         redirect(
           {
@@ -33,7 +33,7 @@ export const organizationsController = new Elysia({
       });
 
       const { jwt } = await turso.logicalDatabases.mintAuthToken(
-        "ethanniser",
+        config.env.TURSO_ORG_SLUG,
         dbName,
       );
 
